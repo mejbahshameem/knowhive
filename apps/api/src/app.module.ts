@@ -1,15 +1,16 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller.js';
-import { AppService } from './app.service.js';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
-    // ConfigModule loads .env file and makes env vars injectable
     ConfigModule.forRoot({
-      isGlobal: true, // Available everywhere, no need to import per module
-      envFilePath: '../../.env', // Root .env file (monorepo)
+      isGlobal: true,
+      envFilePath: '../../.env',
     }),
+    PrismaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
