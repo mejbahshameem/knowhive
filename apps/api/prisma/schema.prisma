@@ -1,11 +1,6 @@
-// AtlasAI Database Schema
-// ========================
-// This is the single source of truth for the database structure.
-// Run `npx prisma migrate dev` to apply changes.
-
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider     = "prisma-client"
+  output       = "../generated/prisma"
   moduleFormat = "cjs"
 }
 
@@ -13,16 +8,13 @@ datasource db {
   provider = "postgresql"
 }
 
-// ========================
-// User — anyone who registers on the platform
-// ========================
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
-  password  String // bcrypt hash, never store plain text
+  password  String
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("users") // table name in PostgreSQL
+  @@map("users")
 }
