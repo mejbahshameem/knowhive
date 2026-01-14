@@ -96,15 +96,21 @@ export class AuthService {
   }
 
   private generateTokens(payload: TokenPayload) {
-    const accessToken = this.jwt.sign(payload, {
-      secret: this.config.get<string>('JWT_SECRET'),
-      expiresIn: this.config.get<string>('JWT_EXPIRATION', '15m'),
-    });
+    const accessToken = this.jwt.sign(
+      { sub: payload.sub, email: payload.email },
+      {
+        secret: this.config.get('JWT_SECRET'),
+        expiresIn: this.config.get('JWT_EXPIRATION') ?? '15m',
+      } as any,
+    );
 
-    const refreshToken = this.jwt.sign(payload, {
-      secret: this.config.get<string>('JWT_REFRESH_SECRET'),
-      expiresIn: this.config.get<string>('JWT_REFRESH_EXPIRATION', '7d'),
-    });
+    const refreshToken = this.jwt.sign(
+      { sub: payload.sub, email: payload.email },
+      {
+        secret: this.config.get('JWT_REFRESH_SECRET'),
+        expiresIn: this.config.get('JWT_REFRESH_EXPIRATION') ?? '7d',
+      } as any,
+    );
 
     return { accessToken, refreshToken };
   }
