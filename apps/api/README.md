@@ -12,6 +12,17 @@ npm run start:dev
 
 Server starts at `http://localhost:3001`. Health check at `GET /health`.
 
+## API endpoints
+
+### Auth
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST | `/api/auth/register` | No | Create account, returns tokens |
+| POST | `/api/auth/login` | No | Login, returns tokens |
+| POST | `/api/auth/refresh` | No | Exchange refresh token for new pair |
+| GET | `/api/auth/me` | Bearer | Get current user profile |
+
 ## Environment
 
 Requires a `.env` file in the project root (two levels up). See `.env.example`.
