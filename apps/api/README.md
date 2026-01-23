@@ -23,6 +23,30 @@ Server starts at `http://localhost:3001`. Health check at `GET /health`.
 | POST | `/api/auth/refresh` | No | Exchange refresh token for new pair |
 | GET | `/api/auth/me` | Bearer | Get current user profile |
 
+### Organizations
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST | `/api/organizations` | Bearer | Create organization (caller becomes OWNER) |
+| GET | `/api/organizations` | Bearer | List caller's organizations |
+| GET | `/api/organizations/:slug` | Bearer | Get organization by slug (members only) |
+| PATCH | `/api/organizations/:slug` | Bearer | Update organization (ADMIN+) |
+| DELETE | `/api/organizations/:slug` | Bearer | Delete organization (OWNER only) |
+| POST | `/api/organizations/:slug/members` | Bearer | Add member (ADMIN+) |
+| DELETE | `/api/organizations/:slug/members/:memberId` | Bearer | Remove member (ADMIN+) |
+
+### Knowledge Bases
+
+All KB routes are scoped under an organization.
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST | `/api/organizations/:slug/knowledge-bases` | Bearer | Create knowledge base (members) |
+| GET | `/api/organizations/:slug/knowledge-bases` | Bearer | List org's knowledge bases (members) |
+| GET | `/api/organizations/:slug/knowledge-bases/:kbId` | Bearer | Get knowledge base (members) |
+| PATCH | `/api/organizations/:slug/knowledge-bases/:kbId` | Bearer | Update knowledge base (members) |
+| DELETE | `/api/organizations/:slug/knowledge-bases/:kbId` | Bearer | Delete knowledge base (ADMIN+) |
+
 ## Environment
 
 Requires a `.env` file in the project root (two levels up). See `.env.example`.
