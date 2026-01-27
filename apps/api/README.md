@@ -47,6 +47,20 @@ All KB routes are scoped under an organization.
 | PATCH | `/api/organizations/:slug/knowledge-bases/:kbId` | Bearer | Update knowledge base (members) |
 | DELETE | `/api/organizations/:slug/knowledge-bases/:kbId` | Bearer | Delete knowledge base (ADMIN+) |
 
+### Documents
+
+All document routes are scoped under a knowledge base.
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST | `.../knowledge-bases/:kbId/documents` | Bearer | Create document (members) |
+| GET | `.../knowledge-bases/:kbId/documents` | Bearer | List documents in KB (members) |
+| GET | `.../knowledge-bases/:kbId/documents/:docId` | Bearer | Get document with content (members) |
+| PATCH | `.../knowledge-bases/:kbId/documents/:docId` | Bearer | Update document (members) |
+| DELETE | `.../knowledge-bases/:kbId/documents/:docId` | Bearer | Delete document (ADMIN+) |
+
+Full document path: `/api/organizations/:slug/knowledge-bases/:kbId/documents`
+
 ## Environment
 
 Requires a `.env` file in the project root (two levels up). See `.env.example`.
