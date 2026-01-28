@@ -6,6 +6,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { KnowledgeBasesModule } from './knowledge-bases/knowledge-bases.module';
+import { DocumentsModule } from './documents/documents.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { KnowledgeBasesModule } from './knowledge-bases/knowledge-bases.module';
     AuthModule,
     OrganizationsModule,
     KnowledgeBasesModule,
+    DocumentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

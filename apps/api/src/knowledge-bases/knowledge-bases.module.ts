@@ -7,5 +7,6 @@ import { OrganizationsModule } from '../organizations/organizations.module';
   imports: [OrganizationsModule],
   controllers: [KnowledgeBasesController],
   providers: [KnowledgeBasesService],
+  exports: [KnowledgeBasesService],
 })
 export class KnowledgeBasesModule {}
