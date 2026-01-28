@@ -94,7 +94,22 @@ model Document {
   createdBy   User   @relation(fields: [createdById], references: [id], onDelete: Cascade)
   createdById String
 
+  chunks DocumentChunk[]
+
   @@index([knowledgeBaseId])
   @@index([createdById])
   @@map("documents")
+}
+
+model DocumentChunk {
+  id        String @id @default(uuid())
+  content   String
+  index     Int
+  embedding Unsupported("vector(1536)")?
+
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  documentId String
+
+  @@index([documentId])
+  @@map("document_chunks")
 }
