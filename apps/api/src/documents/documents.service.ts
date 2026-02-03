@@ -6,6 +6,7 @@ import {
 import { PrismaService } from '../prisma/prisma.service';
 import { OrganizationsService } from '../organizations/organizations.service';
 import { KnowledgeBasesService } from '../knowledge-bases/knowledge-bases.service';
+import { ChunkingService } from '../ai/chunking.service';
 import { CreateDocumentDto, UpdateDocumentDto } from './dto';
 
 @Injectable()
@@ -14,15 +15,17 @@ export class DocumentsService {
     private readonly prisma: PrismaService,
     private readonly orgsService: OrganizationsService,
     private readonly kbService: KnowledgeBasesService,
+    private readonly chunkingService: ChunkingService,
   ) {}
 
   async create(slug: string, kbId: string, dto: CreateDocumentDto, userId: string) {
     const { org } = await this.resolveOrgAndKb(slug, kbId, userId);
 
-    return this.prisma.document.create({
+    const document = await this.prisma.document.create({
       data: {
         title: dto.title,
         content: dto.content,
+        status: 'PENDING',
         knowledgeBaseId: kbId,
         createdById: userId,
       },
@@ -30,6 +33,10 @@ export class DocumentsService {
         createdBy: { select: { id: true, email: true, name: true } },
       },
     });
+
+    this.chunkingService.processDocument(document.id).catch(() => {});
+
+    return document;
   }
 
   async findAllByKb(slug: string, kbId: string, userId: string) {
@@ -69,16 +76,22 @@ export class DocumentsService {
   async update(slug: string, kbId: string, docId: string, dto: UpdateDocumentDto, userId: string) {
     const doc = await this.findOne(slug, kbId, docId, userId);
 
-    return this.prisma.document.update({
+    const updated = await this.prisma.document.update({
       where: { id: doc.id },
       data: {
         ...(dto.title !== undefined && { title: dto.title }),
-        ...(dto.content !== undefined && { content: dto.content }),
+        ...(dto.content !== undefined && { content: dto.content, status: 'PENDING' as const }),
       },
       include: {
         createdBy: { select: { id: true, email: true, name: true } },
       },
     });
+
+    if (dto.content !== undefined) {
+      this.chunkingService.processDocument(updated.id).catch(() => {});
+    }
+
+    return updated;
   }
 
   async remove(slug: string, kbId: string, docId: string, userId: string) {
