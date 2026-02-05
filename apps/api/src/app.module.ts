@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { KnowledgeBasesModule } from './knowledge-bases/knowledge-bases.module';
 import { DocumentsModule } from './documents/documents.module';
+import { AiModule } from './ai/ai.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { DocumentsModule } from './documents/documents.module';
     OrganizationsModule,
     KnowledgeBasesModule,
     DocumentsModule,
+    AiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

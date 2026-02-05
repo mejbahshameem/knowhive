@@ -61,6 +61,22 @@ All document routes are scoped under a knowledge base.
 
 Full document path: `/api/organizations/:slug/knowledge-bases/:kbId/documents`
 
+### Search
+
+Semantic search across documents in a knowledge base using OpenAI embeddings and pgvector.
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST | `.../knowledge-bases/:kbId/search` | Bearer | Semantic search (members) |
+
+Full search path: `/api/organizations/:slug/knowledge-bases/:kbId/search`
+
+Request body: `{ "query": "your search terms" }`
+
+Documents are automatically chunked and embedded when created or updated. Search returns the most relevant chunks ranked by cosine similarity, along with source document metadata.
+
+**Note:** Requires `OPENAI_API_KEY` in `.env` for embeddings. Without it, documents are chunked but not embedded, and search will return no results.
+
 ## Environment
 
 Requires a `.env` file in the project root (two levels up). See `.env.example`.
