@@ -2,21 +2,37 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
+const mockAppService = {
+  getHealth: jest.fn(),
+};
+
 describe('AppController', () => {
-  let appController: AppController;
+  let controller: AppController;
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
+    const module: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
-      providers: [AppService],
+      providers: [{ provide: AppService, useValue: mockAppService }],
     }).compile();
 
-    appController = app.get<AppController>(AppController);
+    controller = module.get<AppController>(AppController);
+    jest.clearAllMocks();
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+  describe('getHealth', () => {
+    it('should return health status from service', async () => {
+      const healthResponse = {
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        service: 'atlasai-api',
+        database: 'connected',
+      };
+      mockAppService.getHealth.mockResolvedValue(healthResponse);
+
+      const result = await controller.getHealth();
+
+      expect(result).toEqual(healthResponse);
+      expect(mockAppService.getHealth).toHaveBeenCalled();
     });
   });
 });
