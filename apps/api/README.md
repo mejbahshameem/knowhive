@@ -77,6 +77,39 @@ Documents are automatically chunked and embedded when created or updated. Search
 
 **Note:** Requires `OPENAI_API_KEY` in `.env` for embeddings. Without it, documents are chunked but not embedded, and search will return no results.
 
+## Security and Error Handling
+
+### Error Response Format
+
+All error responses follow a consistent shape:
+
+```json
+{
+  "statusCode": 400,
+  "message": "Validation failed",
+  "error": "Bad Request",
+  "timestamp": "2026-03-31T12:00:00.000Z",
+  "path": "/api/auth/login"
+}
+```
+
+### Security Headers
+
+Helmet middleware sets production-grade HTTP headers including `Content-Security-Policy`, `Strict-Transport-Security`, `X-Content-Type-Options`, `X-Frame-Options`, and others.
+
+### Rate Limiting
+
+| Scope | Limit | Window |
+|-------|-------|--------|
+| Global | 30 requests | 60 seconds |
+| `POST /auth/register` | 5 requests | 60 seconds |
+| `POST /auth/login` | 10 requests | 60 seconds |
+| `POST /auth/refresh` | 10 requests | 60 seconds |
+
+### Request Logging
+
+Every request is logged with method, URL, status code, and response time.
+
 ## Environment
 
 Requires a `.env` file in the project root (two levels up). See `.env.example`.
