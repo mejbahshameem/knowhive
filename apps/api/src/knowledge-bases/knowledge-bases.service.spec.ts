@@ -24,7 +24,12 @@ const mockOrg = {
   name: 'Test Org',
   slug,
   members: [
-    { id: 'member-1', userId, role: 'OWNER', user: { id: userId, email: 'owner@example.com', name: 'Owner' } },
+    {
+      id: 'member-1',
+      userId,
+      role: 'OWNER',
+      user: { id: userId, email: 'owner@example.com', name: 'Owner' },
+    },
   ],
   _count: { knowledgeBases: 1 },
 };
@@ -63,11 +68,19 @@ describe('KnowledgeBasesService', () => {
     it('should create a knowledge base for a valid member', async () => {
       mockPrismaService.knowledgeBase.create.mockResolvedValue(mockKb);
 
-      const result = await service.create(slug, { name: 'Test KB', description: 'A test knowledge base' }, userId);
+      const result = await service.create(
+        slug,
+        { name: 'Test KB', description: 'A test knowledge base' },
+        userId,
+      );
 
       expect(mockOrgsService.findBySlug).toHaveBeenCalledWith(slug);
       expect(mockPrismaService.knowledgeBase.create).toHaveBeenCalledWith({
-        data: { name: 'Test KB', description: 'A test knowledge base', organizationId: orgId },
+        data: {
+          name: 'Test KB',
+          description: 'A test knowledge base',
+          organizationId: orgId,
+        },
       });
       expect(result).toEqual(mockKb);
     });
@@ -131,7 +144,12 @@ describe('KnowledgeBasesService', () => {
         name: 'Updated KB',
       });
 
-      const result = await service.update(slug, kbId, { name: 'Updated KB' }, userId);
+      const result = await service.update(
+        slug,
+        kbId,
+        { name: 'Updated KB' },
+        userId,
+      );
 
       expect(result.name).toBe('Updated KB');
     });

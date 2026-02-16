@@ -24,7 +24,12 @@ const mockOrg = {
   name: 'Test Org',
   slug,
   members: [
-    { id: 'member-1', userId, role: 'OWNER', user: { id: userId, email: 'owner@example.com', name: 'Owner' } },
+    {
+      id: 'member-1',
+      userId,
+      role: 'OWNER',
+      user: { id: userId, email: 'owner@example.com', name: 'Owner' },
+    },
   ],
   _count: { knowledgeBases: 1 },
 };
@@ -109,9 +114,9 @@ describe('SearchService', () => {
         members: [],
       });
 
-      await expect(
-        service.search(slug, kbId, 'query', userId),
-      ).rejects.toThrow(ForbiddenException);
+      await expect(service.search(slug, kbId, 'query', userId)).rejects.toThrow(
+        ForbiddenException,
+      );
     });
 
     it('should pass the limit parameter to the query', async () => {

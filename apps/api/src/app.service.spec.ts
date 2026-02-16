@@ -34,7 +34,9 @@ describe('AppService', () => {
     });
 
     it('should return error status when database is disconnected', async () => {
-      mockPrismaService.$queryRaw.mockRejectedValue(new Error('Connection refused'));
+      mockPrismaService.$queryRaw.mockRejectedValue(
+        new Error('Connection refused'),
+      );
 
       const result = await service.getHealth();
 

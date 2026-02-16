@@ -52,7 +52,12 @@ export class KnowledgeBasesService {
     return kb;
   }
 
-  async update(slug: string, kbId: string, dto: UpdateKnowledgeBaseDto, userId: string) {
+  async update(
+    slug: string,
+    kbId: string,
+    dto: UpdateKnowledgeBaseDto,
+    userId: string,
+  ) {
     const kb = await this.findOne(slug, kbId, userId);
 
     return this.prisma.knowledgeBase.update({

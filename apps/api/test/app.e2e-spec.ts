@@ -92,9 +92,7 @@ describe('App (e2e)', () => {
     });
 
     it('GET /api/auth/me should require authentication', () => {
-      return request(app.getHttpServer())
-        .get('/api/auth/me')
-        .expect(401);
+      return request(app.getHttpServer()).get('/api/auth/me').expect(401);
     });
 
     it('POST /api/auth/refresh should validate input', () => {
@@ -107,9 +105,7 @@ describe('App (e2e)', () => {
 
   describe('Protected Routes', () => {
     it('GET /api/organizations should require auth', () => {
-      return request(app.getHttpServer())
-        .get('/api/organizations')
-        .expect(401);
+      return request(app.getHttpServer()).get('/api/organizations').expect(401);
     });
 
     it('POST /api/organizations should require auth', () => {

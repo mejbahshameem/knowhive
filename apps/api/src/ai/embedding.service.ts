@@ -23,7 +23,9 @@ export class EmbeddingService {
 
   async embed(text: string): Promise<number[]> {
     if (!this.client) {
-      throw new Error('Embedding service unavailable: OPENAI_API_KEY not configured');
+      throw new Error(
+        'Embedding service unavailable: OPENAI_API_KEY not configured',
+      );
     }
 
     const response = await this.client.embeddings.create({
@@ -36,7 +38,9 @@ export class EmbeddingService {
 
   async embedBatch(texts: string[]): Promise<number[][]> {
     if (!this.client) {
-      throw new Error('Embedding service unavailable: OPENAI_API_KEY not configured');
+      throw new Error(
+        'Embedding service unavailable: OPENAI_API_KEY not configured',
+      );
     }
 
     const sanitized = texts.map((t) => t.replace(/\n/g, ' '));

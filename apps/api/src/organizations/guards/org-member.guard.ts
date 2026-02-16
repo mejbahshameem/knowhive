@@ -1,4 +1,9 @@
-import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { OrgRole } from '../../../generated/prisma/client';
 import { OrganizationsService } from '../organizations.service';
@@ -27,9 +32,16 @@ export class OrgMemberGuard implements CanActivate {
       throw new ForbiddenException('Not a member of this organization');
     }
 
-    const requiredRoles = this.reflector.get<OrgRole[]>(ORG_ROLES_KEY, ctx.getHandler());
+    const requiredRoles = this.reflector.get<OrgRole[]>(
+      ORG_ROLES_KEY,
+      ctx.getHandler(),
+    );
 
-    if (requiredRoles && requiredRoles.length > 0 && !requiredRoles.includes(membership.role)) {
+    if (
+      requiredRoles &&
+      requiredRoles.length > 0 &&
+      !requiredRoles.includes(membership.role)
+    ) {
       throw new ForbiddenException('Insufficient permissions');
     }
 

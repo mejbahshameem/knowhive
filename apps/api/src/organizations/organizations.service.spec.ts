@@ -110,7 +110,9 @@ describe('OrganizationsService', () => {
           },
         },
       ];
-      mockPrismaService.organizationMember.findMany.mockResolvedValue(memberships);
+      mockPrismaService.organizationMember.findMany.mockResolvedValue(
+        memberships,
+      );
 
       const result = await service.findAllByUser(userId);
 
@@ -148,7 +150,11 @@ describe('OrganizationsService', () => {
         slug: 'updated-org',
       });
 
-      const result = await service.update(slug, { name: 'Updated Org' }, userId);
+      const result = await service.update(
+        slug,
+        { name: 'Updated Org' },
+        userId,
+      );
 
       expect(mockPrismaService.organization.update).toHaveBeenCalledWith({
         where: { id: orgId },
@@ -162,7 +168,9 @@ describe('OrganizationsService', () => {
         ...mockOrg,
         members: [{ id: 'member-1', userId, role: 'MEMBER' }],
       };
-      mockPrismaService.organization.findUnique.mockResolvedValue(orgWithMember);
+      mockPrismaService.organization.findUnique.mockResolvedValue(
+        orgWithMember,
+      );
 
       await expect(
         service.update(slug, { name: 'Updated' }, userId),
@@ -196,7 +204,10 @@ describe('OrganizationsService', () => {
   });
 
   describe('addMember', () => {
-    const addMemberDto = { email: 'newmember@example.com', role: 'MEMBER' as const };
+    const addMemberDto = {
+      email: 'newmember@example.com',
+      role: 'MEMBER' as const,
+    };
 
     it('should add a member to the organization', async () => {
       mockPrismaService.organization.findUnique.mockResolvedValue(mockOrg);
@@ -220,7 +231,11 @@ describe('OrganizationsService', () => {
       mockPrismaService.organization.findUnique.mockResolvedValue(mockOrg);
 
       await expect(
-        service.addMember(slug, { email: 'test@example.com', role: 'OWNER' as any }, userId),
+        service.addMember(
+          slug,
+          { email: 'test@example.com', role: 'OWNER' as any },
+          userId,
+        ),
       ).rejects.toThrow(ForbiddenException);
     });
 
@@ -241,7 +256,9 @@ describe('OrganizationsService', () => {
           { id: 'member-2', userId: 'user-2', role: 'MEMBER' },
         ],
       };
-      mockPrismaService.organization.findUnique.mockResolvedValue(orgWithExistingMember);
+      mockPrismaService.organization.findUnique.mockResolvedValue(
+        orgWithExistingMember,
+      );
       mockPrismaService.user.findUnique.mockResolvedValue({
         id: 'user-2',
         email: addMemberDto.email,
@@ -262,7 +279,9 @@ describe('OrganizationsService', () => {
           { id: 'member-2', userId: 'user-2', role: 'MEMBER' },
         ],
       };
-      mockPrismaService.organization.findUnique.mockResolvedValue(orgWithMembers);
+      mockPrismaService.organization.findUnique.mockResolvedValue(
+        orgWithMembers,
+      );
       mockPrismaService.organizationMember.delete.mockResolvedValue(undefined);
 
       await service.removeMember(slug, 'member-2', userId);
@@ -292,7 +311,9 @@ describe('OrganizationsService', () => {
   describe('getUserMembership', () => {
     it('should return the membership record', async () => {
       const membership = { organizationId: orgId, userId, role: 'OWNER' };
-      mockPrismaService.organizationMember.findUnique.mockResolvedValue(membership);
+      mockPrismaService.organizationMember.findUnique.mockResolvedValue(
+        membership,
+      );
 
       const result = await service.getUserMembership(orgId, userId);
 

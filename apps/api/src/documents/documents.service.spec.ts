@@ -27,7 +27,12 @@ const mockOrg = {
   name: 'Test Org',
   slug,
   members: [
-    { id: 'member-1', userId, role: 'OWNER', user: { id: userId, email: 'owner@example.com', name: 'Owner' } },
+    {
+      id: 'member-1',
+      userId,
+      role: 'OWNER',
+      user: { id: userId, email: 'owner@example.com', name: 'Owner' },
+    },
   ],
   _count: { knowledgeBases: 1 },
 };
@@ -116,7 +121,12 @@ describe('DocumentsService', () => {
       });
 
       await expect(
-        service.create(slug, kbId, { title: 'Test', content: 'Content' }, userId),
+        service.create(
+          slug,
+          kbId,
+          { title: 'Test', content: 'Content' },
+          userId,
+        ),
       ).rejects.toThrow(ForbiddenException);
     });
   });
@@ -148,9 +158,9 @@ describe('DocumentsService', () => {
     it('should throw NotFoundException if document not found', async () => {
       mockPrismaService.document.findUnique.mockResolvedValue(null);
 
-      await expect(
-        service.findOne(slug, kbId, docId, userId),
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.findOne(slug, kbId, docId, userId)).rejects.toThrow(
+        NotFoundException,
+      );
     });
 
     it('should throw NotFoundException if doc belongs to different KB', async () => {
@@ -159,9 +169,9 @@ describe('DocumentsService', () => {
         knowledgeBaseId: 'other-kb-id',
       });
 
-      await expect(
-        service.findOne(slug, kbId, docId, userId),
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.findOne(slug, kbId, docId, userId)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -173,7 +183,13 @@ describe('DocumentsService', () => {
         title: 'Updated Title',
       });
 
-      await service.update(slug, kbId, docId, { title: 'Updated Title' }, userId);
+      await service.update(
+        slug,
+        kbId,
+        docId,
+        { title: 'Updated Title' },
+        userId,
+      );
 
       expect(mockChunkingService.processDocument).not.toHaveBeenCalled();
     });
@@ -186,7 +202,13 @@ describe('DocumentsService', () => {
         status: 'PENDING',
       });
 
-      await service.update(slug, kbId, docId, { content: 'New content' }, userId);
+      await service.update(
+        slug,
+        kbId,
+        docId,
+        { content: 'New content' },
+        userId,
+      );
 
       expect(mockChunkingService.processDocument).toHaveBeenCalledWith(docId);
     });
@@ -210,9 +232,9 @@ describe('DocumentsService', () => {
         members: [{ id: 'member-1', userId, role: 'MEMBER' }],
       });
 
-      await expect(
-        service.remove(slug, kbId, docId, userId),
-      ).rejects.toThrow(ForbiddenException);
+      await expect(service.remove(slug, kbId, docId, userId)).rejects.toThrow(
+        ForbiddenException,
+      );
     });
 
     it('should throw ForbiddenException if user is not a member', async () => {
@@ -221,17 +243,17 @@ describe('DocumentsService', () => {
         members: [],
       });
 
-      await expect(
-        service.remove(slug, kbId, docId, userId),
-      ).rejects.toThrow(ForbiddenException);
+      await expect(service.remove(slug, kbId, docId, userId)).rejects.toThrow(
+        ForbiddenException,
+      );
     });
 
     it('should throw NotFoundException if document not found', async () => {
       mockPrismaService.document.findUnique.mockResolvedValue(null);
 
-      await expect(
-        service.remove(slug, kbId, docId, userId),
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.remove(slug, kbId, docId, userId)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 });

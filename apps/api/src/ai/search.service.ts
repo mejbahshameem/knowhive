@@ -41,7 +41,13 @@ export class SearchService {
     const vectorLiteral = `[${queryEmbedding.join(',')}]`;
 
     const results = await this.prisma.$queryRawUnsafe<
-      { chunk_id: string; content: string; score: number; document_id: string; document_title: string }[]
+      {
+        chunk_id: string;
+        content: string;
+        score: number;
+        document_id: string;
+        document_title: string;
+      }[]
     >(
       `SELECT
         dc.id AS chunk_id,
