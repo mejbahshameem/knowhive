@@ -24,7 +24,7 @@ export class DocumentsService {
     dto: CreateDocumentDto,
     userId: string,
   ) {
-    const { org } = await this.resolveOrgAndKb(slug, kbId, userId);
+    await this.resolveOrgAndKb(slug, kbId, userId);
 
     const document = await this.prisma.document.create({
       data: {
