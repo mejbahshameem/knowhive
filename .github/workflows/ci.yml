@@ -40,6 +40,11 @@ jobs:
 
       - name: E2E tests
         run: npm run test:e2e -- --ci
+        env:
+          JWT_SECRET: ci-test-jwt-secret
+          JWT_REFRESH_SECRET: ci-test-jwt-refresh-secret
+          JWT_EXPIRATION: 15m
+          JWT_REFRESH_EXPIRATION: 7d
 
       - name: Upload coverage artifact
         if: always()
