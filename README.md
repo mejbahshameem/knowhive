@@ -1,6 +1,6 @@
 # AtlasAI
 
-Internal knowledge base with AI-powered search. Teams upload documentation, then ask questions in natural language — the system finds relevant docs and generates answers via OpenAI.
+Internal knowledge base with AI powered search. Teams upload documentation, then ask questions in natural language. The system finds relevant documents and generates answers via OpenAI.
 
 ## Stack
 
