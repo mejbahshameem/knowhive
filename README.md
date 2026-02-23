@@ -1,8 +1,6 @@
 # AtlasAI
 
-[![CI](https://github.com/mejbahshameem/atlas-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/mejbahshameem/atlas-ai/actions/workflows/ci.yml)
-
-Internal knowledge base with AI-powered search. Teams upload documentation, then ask questions in natural language — the system finds relevant docs and generates answers via OpenAI.
+Internal knowledge base with AI powered search. Teams upload documentation, then ask questions in natural language. The system finds relevant documents and generates answers via OpenAI.
 
 ## Stack
 
