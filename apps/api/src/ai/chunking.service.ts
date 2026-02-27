@@ -111,7 +111,10 @@ export class ChunkingService {
     for (const paragraph of paragraphs) {
       const trimmed = paragraph.trim();
 
-      if (buffer.length + trimmed.length + 1 > CHUNK_SIZE && buffer.length > 0) {
+      if (
+        buffer.length + trimmed.length + 1 > CHUNK_SIZE &&
+        buffer.length > 0
+      ) {
         chunks.push(buffer.trim());
         const words = buffer.split(' ');
         const overlapWords = words.slice(-CHUNK_OVERLAP);

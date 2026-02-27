@@ -18,8 +18,13 @@ export class DocumentsService {
     private readonly chunkingService: ChunkingService,
   ) {}
 
-  async create(slug: string, kbId: string, dto: CreateDocumentDto, userId: string) {
-    const { org } = await this.resolveOrgAndKb(slug, kbId, userId);
+  async create(
+    slug: string,
+    kbId: string,
+    dto: CreateDocumentDto,
+    userId: string,
+  ) {
+    await this.resolveOrgAndKb(slug, kbId, userId);
 
     const document = await this.prisma.document.create({
       data: {
@@ -73,14 +78,23 @@ export class DocumentsService {
     return doc;
   }
 
-  async update(slug: string, kbId: string, docId: string, dto: UpdateDocumentDto, userId: string) {
+  async update(
+    slug: string,
+    kbId: string,
+    docId: string,
+    dto: UpdateDocumentDto,
+    userId: string,
+  ) {
     const doc = await this.findOne(slug, kbId, docId, userId);
 
     const updated = await this.prisma.document.update({
       where: { id: doc.id },
       data: {
         ...(dto.title !== undefined && { title: dto.title }),
-        ...(dto.content !== undefined && { content: dto.content, status: 'PENDING' as const }),
+        ...(dto.content !== undefined && {
+          content: dto.content,
+          status: 'PENDING' as const,
+        }),
       },
       include: {
         createdBy: { select: { id: true, email: true, name: true } },

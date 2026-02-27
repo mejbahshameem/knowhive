@@ -6,7 +6,11 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { OrgRole } from '../../generated/prisma/client';
-import { CreateOrganizationDto, UpdateOrganizationDto, AddMemberDto } from './dto';
+import {
+  CreateOrganizationDto,
+  UpdateOrganizationDto,
+  AddMemberDto,
+} from './dto';
 
 @Injectable()
 export class OrganizationsService {
@@ -24,7 +28,9 @@ export class OrganizationsService {
         },
       },
       include: {
-        members: { include: { user: { select: { id: true, email: true, name: true } } } },
+        members: {
+          include: { user: { select: { id: true, email: true, name: true } } },
+        },
       },
     });
 
@@ -36,7 +42,9 @@ export class OrganizationsService {
       where: { userId },
       include: {
         organization: {
-          include: { _count: { select: { members: true, knowledgeBases: true } } },
+          include: {
+            _count: { select: { members: true, knowledgeBases: true } },
+          },
         },
       },
       orderBy: { joinedAt: 'desc' },
@@ -155,7 +163,10 @@ export class OrganizationsService {
     }
   }
 
-  private async generateUniqueSlug(name: string, excludeId?: string): Promise<string> {
+  private async generateUniqueSlug(
+    name: string,
+    excludeId?: string,
+  ): Promise<string> {
     const base = name
       .toLowerCase()
       .trim()

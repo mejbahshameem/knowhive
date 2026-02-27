@@ -11,7 +11,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { OrganizationsService } from './organizations.service';
-import { CreateOrganizationDto, UpdateOrganizationDto, AddMemberDto } from './dto';
+import {
+  CreateOrganizationDto,
+  UpdateOrganizationDto,
+  AddMemberDto,
+} from './dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 
@@ -21,7 +25,10 @@ export class OrganizationsController {
   constructor(private readonly orgsService: OrganizationsService) {}
 
   @Post()
-  create(@Body() dto: CreateOrganizationDto, @CurrentUser('id') userId: string) {
+  create(
+    @Body() dto: CreateOrganizationDto,
+    @CurrentUser('id') userId: string,
+  ) {
     return this.orgsService.create(dto, userId);
   }
 
