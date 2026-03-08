@@ -133,7 +133,7 @@ export const knowledgeBases = {
 export interface Document {
   id: string;
   title: string;
-  content: string;
+  content?: string;
   status: 'PENDING' | 'PROCESSING' | 'READY' | 'FAILED';
   knowledgeBaseId: string;
   createdAt: string;
