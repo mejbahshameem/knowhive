@@ -1,6 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 import { Brain, Search, Shield, Layers, Zap, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/context/auth-context';
 
 const features = [
   {
@@ -36,6 +39,8 @@ const features = [
 ];
 
 export default function LandingPage() {
+  const { user, loading } = useAuth();
+
   return (
     <div className="flex flex-col">
       {/* Nav */}
@@ -45,14 +50,24 @@ export default function LandingPage() {
             <Brain className="h-7 w-7 text-primary" />
             <span className="text-xl font-bold text-foreground">AtlasAI</span>
           </div>
-          <div className="flex items-center gap-4">
-            <Link href="/login">
-              <Button variant="ghost" size="sm">Sign In</Button>
-            </Link>
-            <Link href="/register">
-              <Button size="sm">Get Started</Button>
-            </Link>
-          </div>
+          {!loading && (
+            <div className="flex items-center gap-4">
+              {user ? (
+                <Link href="/dashboard">
+                  <Button size="sm">Dashboard</Button>
+                </Link>
+              ) : (
+                <>
+                  <Link href="/login">
+                    <Button variant="ghost" size="sm">Sign In</Button>
+                  </Link>
+                  <Link href="/register">
+                    <Button size="sm">Get Started</Button>
+                  </Link>
+                </>
+              )}
+            </div>
+          )}
         </nav>
       </header>
 
@@ -71,12 +86,20 @@ export default function LandingPage() {
           Upload content, ask questions in natural language, and get precise answers in seconds.
         </p>
         <div className="mt-10 flex items-center gap-4">
-          <Link href="/register">
-            <Button size="lg">Start Free</Button>
-          </Link>
-          <Link href="/login">
-            <Button variant="secondary" size="lg">Sign In</Button>
-          </Link>
+          {user ? (
+            <Link href="/dashboard">
+              <Button size="lg">Go to Dashboard</Button>
+            </Link>
+          ) : (
+            <>
+              <Link href="/register">
+                <Button size="lg">Start Free</Button>
+              </Link>
+              <Link href="/login">
+                <Button variant="secondary" size="lg">Sign In</Button>
+              </Link>
+            </>
+          )}
         </div>
       </section>
 
@@ -123,8 +146,8 @@ export default function LandingPage() {
             Create your account and set up your first knowledge base in minutes.
           </p>
           <div className="mt-8">
-            <Link href="/register">
-              <Button size="lg">Create Free Account</Button>
+            <Link href={user ? '/dashboard' : '/register'}>
+              <Button size="lg">{user ? 'Go to Dashboard' : 'Create Free Account'}</Button>
             </Link>
           </div>
         </div>
