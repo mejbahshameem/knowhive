@@ -16,6 +16,6 @@ export class SearchController {
     @Body() dto: SearchDto,
     @CurrentUser('id') userId: string,
   ) {
-    return this.searchService.search(slug, kbId, dto.query, userId);
+    return this.searchService.search(slug, kbId, dto.query, userId, dto.limit);
   }
 }
