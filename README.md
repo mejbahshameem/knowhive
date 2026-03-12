@@ -45,7 +45,11 @@ Health check: `GET http://localhost:3001/health`
 
 ## Testing
 
-The API has **79 automated tests** (70 unit + 9 e2e) covering authentication, RBAC, CRUD operations, the AI chunking/embedding pipeline, and full HTTP request validation.
+The project has **94 automated tests** covering the backend (unit + API e2e) and the frontend (Playwright browser e2e).
+
+### Backend (Jest)
+
+79 tests (70 unit + 9 e2e) covering authentication, RBAC, CRUD operations, the AI chunking/embedding pipeline, and full HTTP request validation.
 
 ```bash
 cd apps/api
@@ -56,11 +60,9 @@ npm test
 # unit tests with coverage report
 npm run test:cov
 
-# end-to-end tests
+# end-to-end tests (API level)
 npm run test:e2e
 ```
-
-Tests run automatically on every push and pull request via [GitHub Actions](.github/workflows/ci.yml).
 
 | Module | Statements | Branches | Functions | Lines |
 |--------|-----------|----------|-----------|-------|
@@ -70,6 +72,34 @@ Tests run automatically on every push and pull request via [GitHub Actions](.git
 | Documents | 100% | 88% | 81% | 100% |
 | AI Chunking | 100% | 87% | 100% | 100% |
 | AI Search | 100% | 78% | 100% | 100% |
+
+### Frontend (Playwright)
+
+15 browser tests running in Chromium covering authentication flows, dashboard CRUD, document management, semantic search, and navigation.
+
+```bash
+cd apps/web
+
+# run all e2e tests (headless)
+npm run test:e2e
+
+# run with visible browser
+npm run test:e2e:headed
+
+# run with Playwright UI mode
+npm run test:e2e:ui
+
+# open the HTML report after a run
+npm run test:e2e:report
+```
+
+| Spec File | Tests | Coverage |
+|-----------|-------|----------|
+| auth.spec.ts | 7 | Landing page, registration, login, auth guard |
+| dashboard.spec.ts | 4 | Org CRUD, KB CRUD, empty states, navigation |
+| documents.spec.ts | 4 | Document creation, search page, breadcrumbs |
+
+Tests run automatically on every push and pull request via [GitHub Actions](.github/workflows/ci.yml).
 
 ## API Endpoints
 
