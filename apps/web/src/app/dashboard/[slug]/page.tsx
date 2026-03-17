@@ -79,7 +79,7 @@ export default function OrgDetailPage() {
 
       {kbs.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-border py-24">
-          <BookOpen className="h-12 w-12 text-secondary" />
+          <BookOpen className="h-12 w-12 text-secondary/50" />
           <h3 className="mt-4 text-lg font-semibold text-foreground">No knowledge bases yet</h3>
           <p className="mt-2 text-sm text-secondary">Create your first knowledge base to start adding documents.</p>
           <Button className="mt-6" onClick={() => setShowCreate(true)}>

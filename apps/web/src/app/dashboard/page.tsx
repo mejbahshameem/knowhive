@@ -58,7 +58,7 @@ export default function DashboardPage() {
 
       {orgs.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-border py-24">
-          <Building2 className="h-12 w-12 text-secondary" />
+          <Building2 className="h-12 w-12 text-secondary/50" />
           <h3 className="mt-4 text-lg font-semibold text-foreground">No organizations yet</h3>
           <p className="mt-2 text-sm text-secondary">Create your first organization to get started.</p>
           <Button className="mt-6" onClick={() => setShowCreate(true)}>
@@ -74,8 +74,8 @@ export default function DashboardPage() {
               hover
               onClick={() => router.push(`/dashboard/${org.slug}`)}
             >
-              <div className="mb-3 inline-flex rounded-lg bg-primary-light p-2.5">
-                <Building2 className="h-5 w-5 text-primary" />
+              <div className="mb-3 inline-flex rounded-lg bg-accent-light p-2.5">
+                <Building2 className="h-5 w-5 text-accent" />
               </div>
               <CardTitle>{org.name}</CardTitle>
               <CardDescription className="mt-1">/{org.slug}</CardDescription>

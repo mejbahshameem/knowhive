@@ -95,7 +95,7 @@ export default function KnowledgeBaseDetailPage() {
 
       {docs.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-border py-24">
-          <FileText className="h-12 w-12 text-secondary" />
+          <FileText className="h-12 w-12 text-secondary/50" />
           <h3 className="mt-4 text-lg font-semibold text-foreground">No documents yet</h3>
           <p className="mt-2 text-sm text-secondary">Add your first document to start building your knowledge base.</p>
           <Button className="mt-6" onClick={() => setShowCreate(true)}>
