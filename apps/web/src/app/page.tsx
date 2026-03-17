@@ -252,7 +252,7 @@ export default function LandingPage() {
               Three steps to searchable knowledge
             </h2>
             <p className="mt-4 text-lg text-secondary">
-              Get started in minutes, not weeks.
+              From zero to searchable in minutes.
             </p>
           </div>
 
@@ -290,7 +290,7 @@ export default function LandingPage() {
             <div className="mt-8">
               <Link href={user ? '/dashboard' : '/register'}>
                 <Button size="lg">
-                  {user ? 'Go to Dashboard' : 'Get Started Free'}
+                  {user ? 'Go to Dashboard' : 'Create Free Account'}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
