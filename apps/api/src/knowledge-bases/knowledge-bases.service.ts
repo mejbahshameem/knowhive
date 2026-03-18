@@ -34,6 +34,7 @@ export class KnowledgeBasesService {
     return this.prisma.knowledgeBase.findMany({
       where: { organizationId: org.id },
       orderBy: { createdAt: 'desc' },
+      include: { _count: { select: { documents: true } } },
     });
   }
 

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Compass, Search, Shield, Layers, Zap, Users, FileText, Sparkles, Upload, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/theme-toggle';
 import { useAuth } from '@/context/auth-context';
 
 const features = [
@@ -78,7 +79,8 @@ export default function LandingPage() {
             <span className="text-xl font-bold text-foreground">AtlasAI</span>
           </div>
           {!loading && (
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              <ThemeToggle />
               {user ? (
                 <Link href="/dashboard">
                   <Button size="sm">Dashboard</Button>
@@ -196,18 +198,18 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Tech strip */}
+      {/* Trust strip */}
       <section className="border-y border-border bg-muted/50 py-6">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-10 gap-y-3 px-4 text-sm font-medium text-secondary sm:px-6">
-          <span>OpenAI Embeddings</span>
+          <span>Semantic Vector Search</span>
           <span className="hidden sm:inline text-border">|</span>
-          <span>PostgreSQL + pgvector</span>
+          <span>Role Based Access Control</span>
           <span className="hidden sm:inline text-border">|</span>
-          <span>NestJS Backend</span>
+          <span>Automatic Document Processing</span>
           <span className="hidden sm:inline text-border">|</span>
-          <span>Next.js 16 Frontend</span>
+          <span>RESTful API</span>
           <span className="hidden sm:inline text-border">|</span>
-          <span>Docker Ready</span>
+          <span>Container Ready</span>
         </div>
       </section>
 
@@ -259,9 +261,9 @@ export default function LandingPage() {
           <div className="grid gap-8 sm:grid-cols-3">
             {steps.map((step) => (
               <div key={step.number} className="relative text-center">
-                <div className="mb-4 inline-flex items-center justify-center">
-                  <span className="absolute text-5xl font-black text-primary/10">{step.number}</span>
-                  <div className="relative rounded-xl bg-primary-light p-4">
+                <div className="mb-6 flex flex-col items-center">
+                  <span className="mb-2 text-xs font-bold uppercase tracking-widest text-primary">{step.number}</span>
+                  <div className="rounded-xl bg-primary-light p-4">
                     <step.icon className="h-6 w-6 text-primary" />
                   </div>
                 </div>

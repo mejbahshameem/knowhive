@@ -88,6 +88,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     bootstrap();
   }, []);
 
+  // Sync token state when the API client refreshes tokens in the background
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const current = getStoredToken();
+      if (current && current !== token) {
+        setToken(current);
+      } else if (!current && token) {
+        setToken(null);
+        setUser(null);
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [token]);
+
   const login = useCallback(async (email: string, password: string) => {
     const tokens = await auth.login({ email, password });
     await handleTokens(tokens);
