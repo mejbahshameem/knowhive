@@ -180,6 +180,8 @@ export interface Document {
   status: 'PENDING' | 'PROCESSING' | 'READY' | 'FAILED';
   knowledgeBaseId: string;
   createdAt: string;
+  updatedAt?: string;
+  createdBy?: { id: string; name: string; email: string };
 }
 
 export const documents = {
@@ -191,6 +193,9 @@ export const documents = {
 
   create: (token: string, slug: string, kbId: string, data: { title: string; content: string }) =>
     request<Document>(`/api/organizations/${slug}/knowledge-bases/${kbId}/documents`, { method: 'POST', body: JSON.stringify(data), token }),
+
+  update: (token: string, slug: string, kbId: string, docId: string, data: { title?: string; content?: string }) =>
+    request<Document>(`/api/organizations/${slug}/knowledge-bases/${kbId}/documents/${docId}`, { method: 'PATCH', body: JSON.stringify(data), token }),
 
   remove: (token: string, slug: string, kbId: string, docId: string) =>
     request<void>(`/api/organizations/${slug}/knowledge-bases/${kbId}/documents/${docId}`, { method: 'DELETE', token }),

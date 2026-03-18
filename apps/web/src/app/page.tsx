@@ -47,19 +47,16 @@ const features = [
 
 const steps = [
   {
-    number: '01',
     icon: Upload,
     title: 'Upload documents',
     description: 'Add your team documentation, guides, runbooks, or any text content to a knowledge base.',
   },
   {
-    number: '02',
     icon: Zap,
     title: 'AI processes everything',
     description: 'Each document is split into chunks and converted into vector embeddings automatically.',
   },
   {
-    number: '03',
     icon: Search,
     title: 'Search naturally',
     description: 'Ask questions in plain English. The system finds the most relevant content and ranks it by similarity.',
@@ -260,9 +257,8 @@ export default function LandingPage() {
 
           <div className="grid gap-8 sm:grid-cols-3">
             {steps.map((step) => (
-              <div key={step.number} className="relative text-center">
-                <div className="mb-6 flex flex-col items-center">
-                  <span className="mb-2 text-xs font-bold uppercase tracking-widest text-primary">{step.number}</span>
+              <div key={step.title} className="relative text-center">
+                <div className="mb-6 flex justify-center">
                   <div className="rounded-xl bg-primary-light p-4">
                     <step.icon className="h-6 w-6 text-primary" />
                   </div>

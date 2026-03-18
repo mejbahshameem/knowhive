@@ -104,26 +104,28 @@ export default function KnowledgeBaseDetailPage() {
           </Button>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {docs.map((doc) => {
             const status = statusConfig[doc.status] || statusConfig.PENDING;
             const StatusIcon = status.icon;
             return (
-              <Card key={doc.id} className="flex items-center justify-between">
-                <div className="min-w-0 flex-1">
-                  <CardTitle className="truncate">{doc.title}</CardTitle>
-                  {doc.content && (
-                    <CardDescription className="mt-1 line-clamp-2">
-                      {doc.content.substring(0, 200)}
-                      {doc.content.length > 200 ? '...' : ''}
-                    </CardDescription>
-                  )}
-                </div>
-                <div className="ml-4 flex shrink-0 items-center gap-2">
-                  <StatusIcon className={`h-4 w-4 ${status.color} ${doc.status === 'PROCESSING' ? 'animate-spin' : ''}`} />
-                  <span className={`text-xs font-medium ${status.color}`}>{status.label}</span>
-                </div>
-              </Card>
+              <Link key={doc.id} href={`/dashboard/${slug}/${kbId}/${doc.id}`} className="block">
+                <Card className="flex items-center justify-between" hover>
+                  <div className="min-w-0 flex-1">
+                    <CardTitle className="truncate">{doc.title}</CardTitle>
+                    {doc.content && (
+                      <CardDescription className="mt-1 line-clamp-2">
+                        {doc.content.substring(0, 200)}
+                        {doc.content.length > 200 ? '...' : ''}
+                      </CardDescription>
+                    )}
+                  </div>
+                  <div className="ml-4 flex shrink-0 items-center gap-2">
+                    <StatusIcon className={`h-4 w-4 ${status.color} ${doc.status === 'PROCESSING' ? 'animate-spin' : ''}`} />
+                    <span className={`text-xs font-medium ${status.color}`}>{status.label}</span>
+                  </div>
+                </Card>
+              </Link>
             );
           })}
         </div>
