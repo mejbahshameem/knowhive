@@ -10,8 +10,8 @@ interface CardProps {
 export function Card({ children, className = '', hover = false, onClick }: CardProps) {
   return (
     <div
-      className={`rounded-xl border border-border bg-card p-6 shadow-sm
-        ${hover ? 'cursor-pointer transition-shadow hover:shadow-md' : ''}
+      className={`rounded-xl border border-border bg-card p-6 shadow-sm transition-all
+        ${hover ? 'cursor-pointer hover:shadow-md hover:border-primary/30' : ''}
         ${className}`}
       onClick={onClick}
       role={onClick ? 'button' : undefined}

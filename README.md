@@ -9,7 +9,7 @@ Internal knowledge base with AI powered search. Teams upload documentation, then
 | Layer | Tech |
 |-------|------|
 | Backend | NestJS 11, TypeScript, Prisma 7 |
-| Frontend | Next.js 16 (App Router), Tailwind CSS 4 |
+| Frontend | Next.js 16.2.1 (App Router), React 19, Tailwind CSS 4 |
 | Database | PostgreSQL (Neon), pgvector |
 | AI | OpenAI API (text-embedding-3-small) |
 | Infra | Docker, GitHub Actions CI |
@@ -21,6 +21,28 @@ apps/
   api/       NestJS backend (port 3001)
   web/       Next.js frontend (port 3000)
 ```
+
+## Frontend
+
+The frontend uses a custom design system built on Tailwind CSS 4 with CSS custom properties for theming.
+
+**Color palette:** Teal primary (`#0f766e`) with amber accents (`#d97706`) and warm stone neutrals instead of the standard blue/indigo. The palette was chosen to feel distinct from typical AI product templates.
+
+**Dark mode:** Class based dark mode with automatic detection of system preference. Persisted to localStorage. A theme toggle is available in the navigation bar.
+
+**Key pages:**
+
+| Route | Description |
+|-------|-------------|
+| `/` | Landing page with product preview mockup and bento grid features |
+| `/login` | Login form with redirect support |
+| `/register` | Registration form |
+| `/dashboard` | Organization listing |
+| `/dashboard/[slug]` | Knowledge bases in an organization |
+| `/dashboard/[slug]/[kbId]` | Documents with status indicators |
+| `/dashboard/[slug]/[kbId]/search` | Semantic search with relevance scoring |
+
+See [apps/web/README.md](apps/web/README.md) for detailed frontend documentation.
 
 ## Setup
 

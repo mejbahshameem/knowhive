@@ -1,5 +1,8 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
+const TOKEN_KEY = 'atlas_access_token';
+const REFRESH_KEY = 'atlas_refresh_token';
+
 interface FetchOptions extends RequestInit {
   token?: string;
 }
@@ -11,6 +14,29 @@ class ApiError extends Error {
   ) {
     super(message);
     this.name = 'ApiError';
+  }
+}
+
+let refreshPromise: Promise<string | null> | null = null;
+
+async function tryRefresh(): Promise<string | null> {
+  if (typeof window === 'undefined') return null;
+  const refreshToken = localStorage.getItem(REFRESH_KEY);
+  if (!refreshToken) return null;
+
+  try {
+    const res = await fetch(`${API_URL}/api/auth/refresh`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refreshToken }),
+    });
+    if (!res.ok) return null;
+    const tokens = await res.json();
+    localStorage.setItem(TOKEN_KEY, tokens.accessToken);
+    localStorage.setItem(REFRESH_KEY, tokens.refreshToken);
+    return tokens.accessToken;
+  } catch {
+    return null;
   }
 }
 
@@ -30,6 +56,23 @@ async function request<T>(endpoint: string, options: FetchOptions = {}): Promise
     headers,
     ...rest,
   });
+
+  if (res.status === 401 && token && !endpoint.includes('/auth/')) {
+    if (!refreshPromise) {
+      refreshPromise = tryRefresh().finally(() => { refreshPromise = null; });
+    }
+    const newToken = await refreshPromise;
+    if (newToken) {
+      headers['Authorization'] = `Bearer ${newToken}`;
+      const retry = await fetch(`${API_URL}${endpoint}`, { headers, ...rest });
+      if (!retry.ok) {
+        const body = await retry.json().catch(() => ({ message: retry.statusText }));
+        throw new ApiError(retry.status, body.message || retry.statusText);
+      }
+      if (retry.status === 204) return undefined as T;
+      return retry.json();
+    }
+  }
 
   if (!res.ok) {
     const body = await res.json().catch(() => ({ message: res.statusText }));
@@ -137,6 +180,8 @@ export interface Document {
   status: 'PENDING' | 'PROCESSING' | 'READY' | 'FAILED';
   knowledgeBaseId: string;
   createdAt: string;
+  updatedAt?: string;
+  createdBy?: { id: string; name: string; email: string };
 }
 
 export const documents = {
@@ -148,6 +193,9 @@ export const documents = {
 
   create: (token: string, slug: string, kbId: string, data: { title: string; content: string }) =>
     request<Document>(`/api/organizations/${slug}/knowledge-bases/${kbId}/documents`, { method: 'POST', body: JSON.stringify(data), token }),
+
+  update: (token: string, slug: string, kbId: string, docId: string, data: { title?: string; content?: string }) =>
+    request<Document>(`/api/organizations/${slug}/knowledge-bases/${kbId}/documents/${docId}`, { method: 'PATCH', body: JSON.stringify(data), token }),
 
   remove: (token: string, slug: string, kbId: string, docId: string) =>
     request<void>(`/api/organizations/${slug}/knowledge-bases/${kbId}/documents/${docId}`, { method: 'DELETE', token }),

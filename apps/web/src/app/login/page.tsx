@@ -7,7 +7,7 @@ import { useAuth } from '@/context/auth-context';
 import { ApiError } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Brain } from 'lucide-react';
+import { Compass } from 'lucide-react';
 
 function LoginForm() {
   const router = useRouter();
@@ -43,7 +43,7 @@ function LoginForm() {
     <div className="w-full max-w-sm">
       <div className="mb-8 text-center">
         <Link href="/" className="inline-flex items-center gap-2">
-          <Brain className="h-8 w-8 text-primary" />
+          <Compass className="h-8 w-8 text-primary" />
           <span className="text-2xl font-bold text-foreground">AtlasAI</span>
         </Link>
         <h1 className="mt-6 text-2xl font-bold text-foreground">Welcome back</h1>
@@ -92,7 +92,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-muted/30 px-4">
       <Suspense>
         <LoginForm />
       </Suspense>

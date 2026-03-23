@@ -66,7 +66,8 @@ src/
 │               └── search/
 │                   └── page.tsx   Semantic search interface
 ├── components/
-│   ├── navbar.tsx                 Top navigation bar
+│   ├── navbar.tsx                 Top navigation bar with theme toggle
+│   ├── theme-toggle.tsx           Dark/light mode toggle button
 │   └── ui/
 │       ├── button.tsx             Button with variants and loading state
 │       ├── card.tsx               Card container with title and description
@@ -128,17 +129,22 @@ The component library lives in `src/components/ui/` and follows a consistent pat
 
 ## Design System
 
-The theme is defined in `src/app/globals.css` using CSS custom properties with Tailwind v4:
+The theme is defined in `src/app/globals.css` using CSS custom properties with Tailwind v4. The palette uses teal and amber instead of the standard blue/indigo, with warm stone neutrals for a distinctive look.
+
+**Light mode:**
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| `--primary` | `#4f46e5` | Indigo, buttons and links |
-| `--primary-hover` | `#4338ca` | Hover state |
-| `--primary-light` | `#e0e7ff` | Badges and highlights |
-| `--danger` | `#ef4444` | Destructive actions |
-| `--success` | `#22c55e` | Status indicators |
-| `--background` | `#f8fafc` | Page background |
-| `--foreground` | `#0f172a` | Primary text |
+| `--primary` | `#0f766e` | Teal, buttons and links |
+| `--primary-hover` | `#115e59` | Hover state |
+| `--primary-light` | `#ccfbf1` | Badges and highlights |
+| `--accent` | `#d97706` | Amber, secondary highlights |
+| `--danger` | `#dc2626` | Destructive actions |
+| `--success` | `#16a34a` | Status indicators |
+| `--background` | `#fafaf9` | Warm stone page background |
+| `--foreground` | `#1c1917` | Primary text |
+
+**Dark mode:** Automatically inverts using CSS custom property overrides in a `.dark` class. System preference is detected on load and can be toggled via the navbar. No flash of wrong theme thanks to an inline script in the root layout.
 
 Fonts: Geist Sans (body) and Geist Mono (code), loaded via Google Fonts in the root layout.
 

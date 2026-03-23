@@ -84,7 +84,7 @@ export default function SearchPage() {
 
       {!loading && searched && results.length === 0 && (
         <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-border py-16">
-          <Search className="h-12 w-12 text-secondary" />
+          <Search className="h-12 w-12 text-secondary/50" />
           <h3 className="mt-4 text-lg font-semibold text-foreground">No results found</h3>
           <p className="mt-2 text-sm text-secondary">Try rephrasing your question or adding more documents.</p>
         </div>
