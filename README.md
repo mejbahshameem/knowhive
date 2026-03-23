@@ -40,6 +40,7 @@ The frontend uses a custom design system built on Tailwind CSS 4 with CSS custom
 | `/dashboard` | Organization listing |
 | `/dashboard/[slug]` | Knowledge bases in an organization |
 | `/dashboard/[slug]/[kbId]` | Documents with status indicators |
+| `/dashboard/[slug]/[kbId]/[docId]` | Document detail with edit and delete |
 | `/dashboard/[slug]/[kbId]/search` | Semantic search with relevance scoring |
 
 See [apps/web/README.md](apps/web/README.md) for detailed frontend documentation.
