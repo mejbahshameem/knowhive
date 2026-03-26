@@ -2,4 +2,11 @@ node_modules
 .next
 .git
 .env
+.env.*
 *.md
+coverage
+.eslintrc*
+.prettierrc*
+.vscode
+playwright-report
+test-results

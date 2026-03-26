@@ -2,4 +2,12 @@ node_modules
 dist
 .git
 .env
+.env.*
 *.md
+test
+coverage
+.eslintrc*
+.prettierrc*
+jest.config.*
+tsconfig.build.json
+.vscode
