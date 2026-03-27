@@ -12,6 +12,10 @@ npm run start:dev
 
 Server starts at `http://localhost:3001`. Health check at `GET /health`.
 
+## API Documentation
+
+Interactive Swagger UI is available at **http://localhost:3001/api/docs** when the server is running. All endpoints are documented with request/response schemas and example values.
+
 ## API endpoints
 
 ### Auth
