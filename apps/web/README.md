@@ -1,6 +1,6 @@
-# AtlasAI Web
+# KnowHive Web
 
-Frontend application for AtlasAI. Provides a full featured dashboard for managing organizations, knowledge bases, and documents, with a built in semantic search interface powered by the backend AI pipeline.
+Frontend application for KnowHive. Provides a full featured dashboard for managing organizations, knowledge bases, and documents, with a built in semantic search interface powered by the backend AI pipeline.
 
 ## Tech Stack
 

@@ -1,4 +1,4 @@
-# AtlasAI
+# KnowHive
 
 [![CI](https://github.com/mejbahshameem/atlas-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/mejbahshameem/atlas-ai/actions/workflows/ci.yml)
 
