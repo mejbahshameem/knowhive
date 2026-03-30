@@ -28,7 +28,7 @@ describe('AppService', () => {
       const result = await service.getHealth();
 
       expect(result.status).toBe('ok');
-      expect(result.service).toBe('atlasai-api');
+      expect(result.service).toBe('knowhive-api');
       expect(result.database).toBe('connected');
       expect(result.timestamp).toBeDefined();
     });
@@ -41,7 +41,7 @@ describe('AppService', () => {
       const result = await service.getHealth();
 
       expect(result.status).toBe('error');
-      expect(result.service).toBe('atlasai-api');
+      expect(result.service).toBe('knowhive-api');
       expect(result.database).toBe('disconnected');
     });
   });

@@ -59,7 +59,7 @@ describe('App (e2e)', () => {
         .expect(200)
         .expect((res) => {
           expect(res.body.status).toBe('ok');
-          expect(res.body.service).toBe('atlasai-api');
+          expect(res.body.service).toBe('knowhive-api');
           expect(res.body.database).toBe('connected');
         });
     });
