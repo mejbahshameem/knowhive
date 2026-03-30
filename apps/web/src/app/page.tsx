@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Compass, Search, Shield, Layers, Zap, Users, FileText, Sparkles, Upload, ArrowRight } from 'lucide-react';
+import { Hexagon, Search, Shield, Layers, Zap, Users, FileText, Sparkles, Upload, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { useAuth } from '@/context/auth-context';
@@ -72,8 +72,8 @@ export default function LandingPage() {
       <header className="border-b border-border bg-card/80 backdrop-blur-sm">
         <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2">
-            <Compass className="h-7 w-7 text-primary" />
-            <span className="text-xl font-bold text-foreground">AtlasAI</span>
+            <Hexagon className="h-7 w-7 text-primary" />
+            <span className="text-xl font-bold text-foreground">KnowHive</span>
           </div>
           {!loading && (
             <div className="flex items-center gap-3">
@@ -302,8 +302,8 @@ export default function LandingPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <div className="flex items-center gap-2">
-              <Compass className="h-5 w-5 text-primary" />
-              <span className="text-sm font-semibold text-foreground">AtlasAI</span>
+              <Hexagon className="h-5 w-5 text-primary" />
+              <span className="text-sm font-semibold text-foreground">KnowHive</span>
             </div>
             <p className="text-sm text-secondary">
               Built with NestJS, Next.js, and OpenAI

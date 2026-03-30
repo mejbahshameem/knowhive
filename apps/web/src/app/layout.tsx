@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AtlasAI | Intelligent Knowledge Management",
+  title: "KnowHive | Intelligent Knowledge Management",
   description:
     "AI-powered knowledge base platform with semantic search for teams and organizations.",
 };
