@@ -1,7 +1,7 @@
 services:
-  # PostgreSQL Database
+  # PostgreSQL with pgvector extension
   postgres:
-    image: postgres:16-alpine
+    image: pgvector/pgvector:pg16
     container_name: atlasai-postgres
     restart: unless-stopped
     environment:
@@ -12,6 +12,11 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U atlasai"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # NestJS Backend API
   api:
@@ -29,14 +34,22 @@ services:
       JWT_REFRESH_SECRET: dev-jwt-refresh-secret-do-not-use-in-production
       JWT_EXPIRATION: 15m
       JWT_REFRESH_EXPIRATION: 7d
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-sk-placeholder}
       PORT: 3001
       NODE_ENV: development
       FRONTEND_URL: http://localhost:3000
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     volumes:
       - ./apps/api:/app
       - /app/node_modules
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3001/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
 
   # Next.js Frontend
   web:
@@ -51,7 +64,8 @@ services:
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:3001
     depends_on:
-      - api
+      api:
+        condition: service_healthy
     volumes:
       - ./apps/web:/app
       - /app/node_modules

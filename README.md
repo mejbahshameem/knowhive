@@ -66,6 +66,44 @@ npm run dev
 
 Health check: `GET http://localhost:3001/health`
 
+## API Documentation
+
+Interactive Swagger UI is available at **http://localhost:3001/api/docs** when the API is running. The documentation covers all 23 endpoints with request/response schemas, parameter descriptions, and example values. You can authenticate directly from the Swagger UI using the **Authorize** button with a JWT access token.
+
+## Docker
+
+### Development
+
+Spin up the full stack (PostgreSQL with pgvector, API, and web) with hot reloading:
+
+```bash
+docker compose up
+```
+
+The API runs migrations automatically. After first startup run:
+
+```bash
+docker compose exec api npx prisma migrate dev
+```
+
+| Service | URL |
+|---------|-----|
+| Frontend | http://localhost:3000 |
+| API | http://localhost:3001 |
+| Swagger Docs | http://localhost:3001/api/docs |
+| PostgreSQL | localhost:5432 |
+
+### Production
+
+```bash
+cp .env.example .env
+# fill in all values (secrets, OpenAI key, database credentials)
+
+docker compose -f docker-compose.prod.yml up --build -d
+```
+
+The production compose file uses multi-stage Docker builds, enforces required environment variables, and runs health checks on all services.
+
 ## Testing
 
 The project has **94 automated tests** covering the backend (unit + API e2e) and the frontend (Playwright browser e2e).
@@ -129,6 +167,7 @@ Tests run automatically on every push and pull request via [GitHub Actions](.git
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
 | `GET` | `/health` | No | Health check |
+| `GET` | `/api/docs` | No | Swagger UI |
 | `POST` | `/api/auth/register` | No | Register |
 | `POST` | `/api/auth/login` | No | Login |
 | `POST` | `/api/auth/refresh` | No | Refresh tokens |
