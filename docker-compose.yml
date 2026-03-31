@@ -2,18 +2,18 @@ services:
   # PostgreSQL with pgvector extension
   postgres:
     image: pgvector/pgvector:pg16
-    container_name: atlasai-postgres
+    container_name: knowhive-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: atlasai
-      POSTGRES_PASSWORD: atlasai_password
-      POSTGRES_DB: atlasai
+      POSTGRES_USER: knowhive
+      POSTGRES_PASSWORD: knowhive_password
+      POSTGRES_DB: knowhive
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U atlasai"]
+      test: ["CMD-SHELL", "pg_isready -U knowhive"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -24,12 +24,12 @@ services:
       context: ./apps/api
       dockerfile: Dockerfile
       target: development
-    container_name: atlasai-api
+    container_name: knowhive-api
     restart: unless-stopped
     ports:
       - "3001:3001"
     environment:
-      DATABASE_URL: postgresql://atlasai:atlasai_password@postgres:5432/atlasai?schema=public
+      DATABASE_URL: postgresql://knowhive:knowhive_password@postgres:5432/knowhive?schema=public
       JWT_SECRET: dev-jwt-secret-do-not-use-in-production
       JWT_REFRESH_SECRET: dev-jwt-refresh-secret-do-not-use-in-production
       JWT_EXPIRATION: 15m
@@ -57,7 +57,7 @@ services:
       context: ./apps/web
       dockerfile: Dockerfile
       target: development
-    container_name: atlasai-web
+    container_name: knowhive-web
     restart: unless-stopped
     ports:
       - "3000:3000"

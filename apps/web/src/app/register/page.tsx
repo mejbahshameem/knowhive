@@ -7,7 +7,7 @@ import { useAuth } from '@/context/auth-context';
 import { ApiError } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Compass } from 'lucide-react';
+import { Hexagon } from 'lucide-react';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -43,11 +43,11 @@ export default function RegisterPage() {
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
           <Link href="/" className="inline-flex items-center gap-2">
-            <Compass className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold text-foreground">AtlasAI</span>
+            <Hexagon className="h-8 w-8 text-primary" />
+            <span className="text-2xl font-bold text-foreground">KnowHive</span>
           </Link>
           <h1 className="mt-6 text-2xl font-bold text-foreground">Create your account</h1>
-          <p className="mt-2 text-sm text-secondary">Get started with AtlasAI</p>
+          <p className="mt-2 text-sm text-secondary">Get started with KnowHive</p>
         </div>
 
         {error && (

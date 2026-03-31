@@ -1,6 +1,6 @@
-# AtlasAI Web
+# KnowHive Web
 
-Frontend application for AtlasAI. Provides a full featured dashboard for managing organizations, knowledge bases, and documents, with a built in semantic search interface powered by the backend AI pipeline.
+Frontend application for KnowHive. Provides a full featured dashboard for managing organizations, knowledge bases, and documents, with a built in semantic search interface powered by the backend AI pipeline.
 
 ## Tech Stack
 
@@ -157,12 +157,12 @@ The included Dockerfile supports three stages:
 
 ```bash
 # Development
-docker build --target development -t atlas-web:dev .
-docker run -p 3000:3000 atlas-web:dev
+docker build --target development -t knowhive-web:dev .
+docker run -p 3000:3000 knowhive-web:dev
 
 # Production
-docker build --target production -t atlas-web:prod .
-docker run -p 3000:3000 atlas-web:prod
+docker build --target production -t knowhive-web:prod .
+docker run -p 3000:3000 knowhive-web:prod
 ```
 
 The production image uses the Next.js standalone output for a minimal container size.

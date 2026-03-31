@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Sun, Moon } from 'lucide-react';
 
-const STORAGE_KEY = 'atlas_theme';
+const STORAGE_KEY = 'knowhive_theme';
 
 export function ThemeToggle() {
   const [dark, setDark] = useState(false);

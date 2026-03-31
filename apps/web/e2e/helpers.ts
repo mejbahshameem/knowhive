@@ -37,8 +37,8 @@ async function registerViaApi(user: TestUser): Promise<{ accessToken: string; re
 async function injectAuth(page: Page, tokens: { accessToken: string; refreshToken: string }) {
   await page.goto('/');
   await page.evaluate((t) => {
-    localStorage.setItem('atlas_access_token', t.accessToken);
-    localStorage.setItem('atlas_refresh_token', t.refreshToken);
+    localStorage.setItem('knowhive_access_token', t.accessToken);
+    localStorage.setItem('knowhive_refresh_token', t.refreshToken);
   }, tokens);
 }
 

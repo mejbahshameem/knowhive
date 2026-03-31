@@ -11,14 +11,14 @@ export class AppService {
       return {
         status: 'ok',
         timestamp: new Date().toISOString(),
-        service: 'atlasai-api',
+        service: 'knowhive-api',
         database: 'connected',
       };
     } catch {
       return {
         status: 'error',
         timestamp: new Date().toISOString(),
-        service: 'atlasai-api',
+        service: 'knowhive-api',
         database: 'disconnected',
       };
     }

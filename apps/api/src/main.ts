@@ -32,7 +32,7 @@ async function bootstrap() {
   });
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('AtlasAI API')
+    .setTitle('KnowHive API')
     .setDescription(
       'AI powered knowledge base platform. Organize documents into knowledge bases, ' +
         'generate vector embeddings, and perform semantic search across your content.',
@@ -52,7 +52,7 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api/docs', app, document, {
-    customSiteTitle: 'AtlasAI API Documentation',
+    customSiteTitle: 'KnowHive API Documentation',
     swaggerOptions: {
       persistAuthorization: true,
       docExpansion: 'list',

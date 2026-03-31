@@ -14,8 +14,8 @@ interface AuthState {
 
 const AuthContext = createContext<AuthState | undefined>(undefined);
 
-const TOKEN_KEY = 'atlas_access_token';
-const REFRESH_KEY = 'atlas_refresh_token';
+const TOKEN_KEY = 'knowhive_access_token';
+const REFRESH_KEY = 'knowhive_refresh_token';
 
 function saveTokens(tokens: AuthTokens) {
   localStorage.setItem(TOKEN_KEY, tokens.accessToken);

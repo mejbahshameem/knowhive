@@ -1,6 +1,6 @@
-# AtlasAI API
+# KnowHive API
 
-Backend service for AtlasAI. Built with NestJS, Prisma, and PostgreSQL.
+Backend service for KnowHive. Built with NestJS, Prisma, and PostgreSQL.
 
 ## Running locally
 

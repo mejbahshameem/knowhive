@@ -24,7 +24,7 @@ describe('AppController', () => {
       const healthResponse = {
         status: 'ok',
         timestamp: new Date().toISOString(),
-        service: 'atlasai-api',
+        service: 'knowhive-api',
         database: 'connected',
       };
       mockAppService.getHealth.mockResolvedValue(healthResponse);
