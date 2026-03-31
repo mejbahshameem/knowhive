@@ -1,7 +1,7 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
-const TOKEN_KEY = 'atlas_access_token';
-const REFRESH_KEY = 'atlas_refresh_token';
+const TOKEN_KEY = 'knowhive_access_token';
+const REFRESH_KEY = 'knowhive_refresh_token';
 
 interface FetchOptions extends RequestInit {
   token?: string;
