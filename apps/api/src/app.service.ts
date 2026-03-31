@@ -11,9 +11,9 @@ export class AppService {
       return {
         status: 'ok',
         timestamp: new Date().toISOString(),
-      service: 'knowhive-api',
-      database: 'connected',
-    };
+        service: 'knowhive-api',
+        database: 'connected',
+      };
     } catch {
       return {
         status: 'error',
