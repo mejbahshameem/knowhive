@@ -1,6 +1,6 @@
 # KnowHive
 
-[![CI](https://github.com/mejbahshameem/atlas-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/mejbahshameem/atlas-ai/actions/workflows/ci.yml)
+[![CI](https://github.com/mejbahshameem/knowhive/actions/workflows/ci.yml/badge.svg)](https://github.com/mejbahshameem/knowhive/actions/workflows/ci.yml)
 
 Internal knowledge base with AI powered search. Teams upload documentation, then ask questions in natural language. The system finds relevant documents and generates answers via OpenAI.
 
@@ -48,8 +48,8 @@ See [apps/web/README.md](apps/web/README.md) for detailed frontend documentation
 ## Setup
 
 ```bash
-git clone https://github.com/mejbahshameem/atlas-ai.git
-cd atlas-ai
+git clone https://github.com/mejbahshameem/knowhive.git
+cd knowhive
 cp .env.example .env
 # fill in DATABASE_URL and other values
 
