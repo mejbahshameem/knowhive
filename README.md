@@ -1,6 +1,6 @@
 # KnowHive
 
-[![CI](https://github.com/mejbahshameem/atlas-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/mejbahshameem/atlas-ai/actions/workflows/ci.yml)
+[![CI](https://github.com/mejbahshameem/knowhive/actions/workflows/ci.yml/badge.svg)](https://github.com/mejbahshameem/knowhive/actions/workflows/ci.yml)
 
 Internal knowledge base with AI powered search. Teams upload documentation, then ask questions in natural language. The system finds relevant documents and generates answers via OpenAI.
 
@@ -9,7 +9,7 @@ Internal knowledge base with AI powered search. Teams upload documentation, then
 | Layer | Tech |
 |-------|------|
 | Backend | NestJS 11, TypeScript, Prisma 7 |
-| Frontend | Next.js 16.2.1 (App Router), React 19, Tailwind CSS 4 |
+| Frontend | Next.js 16, React 19, Tailwind CSS 4 |
 | Database | PostgreSQL (Neon), pgvector |
 | AI | OpenAI API (text-embedding-3-small) |
 | Infra | Docker, GitHub Actions CI |
@@ -48,8 +48,8 @@ See [apps/web/README.md](apps/web/README.md) for detailed frontend documentation
 ## Setup
 
 ```bash
-git clone https://github.com/mejbahshameem/atlas-ai.git
-cd atlas-ai
+git clone https://github.com/mejbahshameem/knowhive.git
+cd knowhive
 cp .env.example .env
 # fill in DATABASE_URL and other values
 
@@ -68,21 +68,21 @@ Health check: `GET http://localhost:3001/health`
 
 ## Demo Account
 
-A pre-configured demo account is available for exploring the application. Use the seed script to populate the database with sample data:
-
-```bash
-cd apps/api
-npm run seed
-```
-
-This creates a test user, an organization, four knowledge bases, and 11 documents with full vector embeddings (requires `OPENAI_API_KEY` in `.env`). The documents cover engineering practices, design guidelines, company policies, and onboarding material so that all features including semantic search can be tested.
+A test account is already set up with sample data so you can explore the full application right away. Log in with the credentials below to browse knowledge bases, view documents, and try semantic search.
 
 | Field | Value |
 |-------|-------|
 | Email | `demo@knowhive.dev` |
 | Password | `Demo@1234` |
 
-The seed is idempotent. Running it again will clean up previous seed data and recreate everything fresh.
+If you are running a local instance, populate the data first:
+
+```bash
+cd apps/api
+npm run seed
+```
+
+This creates the demo user, an organization, four knowledge bases, and 11 documents with vector embeddings. The seed is idempotent and safe to re-run.
 
 ## API Documentation
 
