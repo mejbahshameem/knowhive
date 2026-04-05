@@ -66,6 +66,24 @@ npm run dev
 
 Health check: `GET http://localhost:3001/health`
 
+## Demo Account
+
+A pre-configured demo account is available for exploring the application. Use the seed script to populate the database with sample data:
+
+```bash
+cd apps/api
+npm run seed
+```
+
+This creates a test user, an organization, four knowledge bases, and 11 documents with full vector embeddings (requires `OPENAI_API_KEY` in `.env`). The documents cover engineering practices, design guidelines, company policies, and onboarding material so that all features including semantic search can be tested.
+
+| Field | Value |
+|-------|-------|
+| Email | `demo@knowhive.dev` |
+| Password | `Demo@1234` |
+
+The seed is idempotent. Running it again will clean up previous seed data and recreate everything fresh.
+
 ## API Documentation
 
 Interactive Swagger UI is available at **http://localhost:3001/api/docs** when the API is running. The documentation covers all 23 endpoints with request/response schemas, parameter descriptions, and example values. You can authenticate directly from the Swagger UI using the **Authorize** button with a JWT access token.
