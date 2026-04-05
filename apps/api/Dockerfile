@@ -5,6 +5,7 @@ COPY package*.json ./
 RUN npm ci
 COPY . .
 ENV DATABASE_URL="postgresql://placeholder:placeholder@localhost:5432/placeholder"
+RUN rm -f prisma.config.ts
 RUN npx prisma generate
 RUN npm run build
 
