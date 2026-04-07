@@ -101,7 +101,7 @@ export default function LandingPage() {
       <section className="mx-auto grid max-w-7xl gap-12 px-4 pt-20 pb-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8 lg:pt-28">
         <div>
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary-light px-4 py-1.5 text-sm font-medium text-primary">
-            <Hexagon className="h-4 w-4" />
+            <Sparkles className="h-4 w-4" />
             AI Powered Knowledge Platform
           </div>
           <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
