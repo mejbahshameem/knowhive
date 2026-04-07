@@ -22,6 +22,7 @@ import {
   CreateOrganizationDto,
   UpdateOrganizationDto,
   AddMemberDto,
+  UpdateMemberRoleDto,
 } from './dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
@@ -109,5 +110,32 @@ export class OrganizationsController {
     @CurrentUser('id') userId: string,
   ) {
     return this.orgsService.removeMember(slug, memberId, userId);
+  }
+
+  @Patch(':slug/members/:memberId')
+  @ApiOperation({ summary: 'Update a member role' })
+  @ApiParam({ name: 'slug', description: 'Organization URL slug' })
+  @ApiParam({ name: 'memberId', description: 'Membership ID to update' })
+  @ApiResponse({ status: 200, description: 'Member role updated' })
+  @ApiResponse({ status: 403, description: 'Insufficient permissions' })
+  @ApiResponse({ status: 404, description: 'Member not found' })
+  updateMemberRole(
+    @Param('slug') slug: string,
+    @Param('memberId') memberId: string,
+    @Body() dto: UpdateMemberRoleDto,
+    @CurrentUser('id') userId: string,
+  ) {
+    return this.orgsService.updateMemberRole(slug, memberId, dto, userId);
+  }
+
+  @Get(':slug/members')
+  @ApiOperation({ summary: 'List all members of an organization' })
+  @ApiParam({ name: 'slug', description: 'Organization URL slug' })
+  @ApiResponse({ status: 200, description: 'Array of members' })
+  listMembers(
+    @Param('slug') slug: string,
+    @CurrentUser('id') userId: string,
+  ) {
+    return this.orgsService.listMembers(slug, userId);
   }
 }
