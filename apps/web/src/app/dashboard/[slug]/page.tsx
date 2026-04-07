@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Modal } from '@/components/ui/modal';
 import { Spinner } from '@/components/ui/spinner';
-import { Plus, BookOpen, FileText, ChevronRight, ArrowLeft } from 'lucide-react';
+import { Plus, BookOpen, FileText, ChevronRight, ArrowLeft, Users } from 'lucide-react';
 
 export default function OrgDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -71,10 +71,18 @@ export default function OrgDetailPage() {
           <h1 className="text-2xl font-bold text-foreground">{org.name}</h1>
           <p className="mt-1 text-sm text-secondary">/{org.slug}</p>
         </div>
-        <Button onClick={() => setShowCreate(true)}>
-          <Plus className="mr-2 h-4 w-4" />
-          New Knowledge Base
-        </Button>
+        <div className="flex items-center gap-3">
+          <Link href={`/dashboard/${slug}/members`}>
+            <Button variant="secondary" size="sm">
+              <Users className="mr-2 h-4 w-4" />
+              Members
+            </Button>
+          </Link>
+          <Button onClick={() => setShowCreate(true)}>
+            <Plus className="mr-2 h-4 w-4" />
+            New Knowledge Base
+          </Button>
+        </div>
       </div>
 
       {kbs.length === 0 ? (
