@@ -8,7 +8,9 @@ const STORAGE_KEY = 'knowhive_theme';
 export function ThemeToggle() {
   const [dark, setDark] = useState(() => {
     if (typeof window === 'undefined') return false;
-    return localStorage.getItem(STORAGE_KEY) === 'dark';
+    const stored = localStorage.getItem(STORAGE_KEY);
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return stored === 'dark' || (!stored && prefersDark);
   });
 
   useEffect(() => {
