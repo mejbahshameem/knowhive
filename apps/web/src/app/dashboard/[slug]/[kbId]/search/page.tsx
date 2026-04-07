@@ -96,9 +96,10 @@ export default function SearchPage() {
             {results.length} result{results.length !== 1 ? 's' : ''} found
           </p>
           {results.map((result, index) => (
-            <div
+            <Link
               key={index}
-              className="rounded-xl border border-border bg-card p-6 shadow-sm"
+              href={`/dashboard/${slug}/${kbId}/${result.documentId}`}
+              className="block rounded-xl border border-border bg-card p-6 shadow-sm transition-colors hover:border-primary/40 hover:shadow-md"
             >
               <div className="mb-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -122,7 +123,7 @@ export default function SearchPage() {
               <p className="text-sm leading-relaxed text-foreground/80">
                 {result.content}
               </p>
-            </div>
+            </Link>
           ))}
         </div>
       )}
