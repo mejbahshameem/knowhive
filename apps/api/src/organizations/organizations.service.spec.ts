@@ -19,6 +19,7 @@ const mockPrismaService = {
     create: jest.fn(),
     delete: jest.fn(),
     findUnique: jest.fn(),
+    update: jest.fn(),
   },
   user: {
     findUnique: jest.fn(),
@@ -318,6 +319,150 @@ describe('OrganizationsService', () => {
       const result = await service.getUserMembership(orgId, userId);
 
       expect(result).toEqual(membership);
+    });
+  });
+
+  describe('updateMemberRole', () => {
+    const orgWithMembers = {
+      ...mockOrg,
+      members: [
+        ...mockOrg.members,
+        {
+          id: 'member-2',
+          userId: 'user-2',
+          role: 'MEMBER',
+          user: { id: 'user-2', email: 'member@example.com', name: 'Member' },
+        },
+      ],
+    };
+
+    it('should update a member role when called by the owner', async () => {
+      mockPrismaService.organization.findUnique.mockResolvedValue(
+        orgWithMembers,
+      );
+      mockPrismaService.organizationMember.update.mockResolvedValue({
+        id: 'member-2',
+        role: 'ADMIN',
+        user: { id: 'user-2', email: 'member@example.com', name: 'Member' },
+      });
+
+      const result = await service.updateMemberRole(
+        slug,
+        'member-2',
+        { role: 'ADMIN' as any },
+        userId,
+      );
+
+      expect(mockPrismaService.organizationMember.update).toHaveBeenCalledWith({
+        where: { id: 'member-2' },
+        data: { role: 'ADMIN' },
+        include: { user: { select: { id: true, email: true, name: true } } },
+      });
+      expect(result.role).toBe('ADMIN');
+    });
+
+    it('should throw ForbiddenException when trying to change the owner role', async () => {
+      mockPrismaService.organization.findUnique.mockResolvedValue(mockOrg);
+
+      await expect(
+        service.updateMemberRole(
+          slug,
+          'member-1',
+          { role: 'ADMIN' as any },
+          userId,
+        ),
+      ).rejects.toThrow(ForbiddenException);
+    });
+
+    it('should throw ForbiddenException when assigning OWNER role', async () => {
+      mockPrismaService.organization.findUnique.mockResolvedValue(
+        orgWithMembers,
+      );
+
+      await expect(
+        service.updateMemberRole(
+          slug,
+          'member-2',
+          { role: 'OWNER' as any },
+          userId,
+        ),
+      ).rejects.toThrow(ForbiddenException);
+    });
+
+    it('should throw ForbiddenException when an admin tries to change another admin', async () => {
+      const orgWithAdmins = {
+        ...mockOrg,
+        members: [
+          { id: 'member-admin', userId: 'admin-1', role: 'ADMIN' },
+          { id: 'member-admin-2', userId: 'admin-2', role: 'ADMIN' },
+        ],
+      };
+      mockPrismaService.organization.findUnique.mockResolvedValue(
+        orgWithAdmins,
+      );
+
+      await expect(
+        service.updateMemberRole(
+          slug,
+          'member-admin-2',
+          { role: 'MEMBER' as any },
+          'admin-1',
+        ),
+      ).rejects.toThrow(ForbiddenException);
+    });
+
+    it('should throw NotFoundException when the target member does not exist', async () => {
+      mockPrismaService.organization.findUnique.mockResolvedValue(mockOrg);
+
+      await expect(
+        service.updateMemberRole(
+          slug,
+          'nonexistent',
+          { role: 'ADMIN' as any },
+          userId,
+        ),
+      ).rejects.toThrow(NotFoundException);
+    });
+
+    it('should throw ForbiddenException when a regular member tries to change roles', async () => {
+      const orgMemberCaller = {
+        ...mockOrg,
+        members: [
+          { id: 'member-1', userId, role: 'OWNER' },
+          { id: 'member-2', userId: 'user-2', role: 'MEMBER' },
+          { id: 'member-3', userId: 'user-3', role: 'MEMBER' },
+        ],
+      };
+      mockPrismaService.organization.findUnique.mockResolvedValue(
+        orgMemberCaller,
+      );
+
+      await expect(
+        service.updateMemberRole(
+          slug,
+          'member-2',
+          { role: 'ADMIN' as any },
+          'user-3',
+        ),
+      ).rejects.toThrow(ForbiddenException);
+    });
+  });
+
+  describe('listMembers', () => {
+    it('should return all members for an authorized user', async () => {
+      mockPrismaService.organization.findUnique.mockResolvedValue(mockOrg);
+
+      const result = await service.listMembers(slug, userId);
+
+      expect(result).toEqual(mockOrg.members);
+    });
+
+    it('should throw ForbiddenException for a non member', async () => {
+      mockPrismaService.organization.findUnique.mockResolvedValue(mockOrg);
+
+      await expect(
+        service.listMembers(slug, 'unknown-user'),
+      ).rejects.toThrow(ForbiddenException);
     });
   });
 });
