@@ -39,6 +39,7 @@ The frontend uses a custom design system built on Tailwind CSS 4 with CSS custom
 | `/register` | Registration form |
 | `/dashboard` | Organization listing |
 | `/dashboard/[slug]` | Knowledge bases in an organization |
+| `/dashboard/[slug]/members` | Member management (add, remove, role change) |
 | `/dashboard/[slug]/[kbId]` | Documents with status indicators |
 | `/dashboard/[slug]/[kbId]/[docId]` | Document detail with edit and delete |
 | `/dashboard/[slug]/[kbId]/search` | Semantic search with relevance scoring |
@@ -86,7 +87,7 @@ This creates the demo user, an organization, four knowledge bases, and 11 docume
 
 ## API Documentation
 
-Interactive Swagger UI is available at **http://localhost:3001/api/docs** when the API is running. The documentation covers all 23 endpoints with request/response schemas, parameter descriptions, and example values. You can authenticate directly from the Swagger UI using the **Authorize** button with a JWT access token.
+Interactive Swagger UI is available at **http://localhost:3001/api/docs** when the API is running. The documentation covers all 25 endpoints with request/response schemas, parameter descriptions, and example values. You can authenticate directly from the Swagger UI using the **Authorize** button with a JWT access token.
 
 ## Docker
 
@@ -124,11 +125,11 @@ The production compose file uses multi-stage Docker builds, enforces required en
 
 ## Testing
 
-The project has **94 automated tests** covering the backend (unit + API e2e) and the frontend (Playwright browser e2e).
+The project has **102 automated tests** covering the backend (unit + API e2e) and the frontend (Playwright browser e2e).
 
 ### Backend (Jest)
 
-79 tests (70 unit + 9 e2e) covering authentication, RBAC, CRUD operations, the AI chunking/embedding pipeline, and full HTTP request validation.
+87 tests (78 unit + 9 e2e) covering authentication, RBAC, CRUD operations, member management, the AI chunking/embedding pipeline, and full HTTP request validation.
 
 ```bash
 cd apps/api
@@ -195,7 +196,9 @@ Tests run automatically on every push and pull request via [GitHub Actions](.git
 | `GET` | `/api/organizations/:slug` | JWT | Get organization |
 | `PATCH` | `/api/organizations/:slug` | JWT | Update organization |
 | `DELETE` | `/api/organizations/:slug` | JWT | Delete organization (owner only) |
+| `GET` | `/api/organizations/:slug/members` | JWT | List members |
 | `POST` | `/api/organizations/:slug/members` | JWT | Add member |
+| `PATCH` | `/api/organizations/:slug/members/:id` | JWT | Update member role |
 | `DELETE` | `/api/organizations/:slug/members/:id` | JWT | Remove member |
 | `GET` | `/api/organizations/:slug/knowledge-bases` | JWT | List knowledge bases |
 | `POST` | `/api/organizations/:slug/knowledge-bases` | JWT | Create knowledge base |
