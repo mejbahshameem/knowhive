@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useState, useRef, useCallback, type FormEvent } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/context/auth-context';
@@ -11,7 +11,6 @@ import { Modal } from '@/components/ui/modal';
 import { Spinner } from '@/components/ui/spinner';
 import {
   ArrowLeft,
-  Users,
   Crown,
   ShieldCheck,
   User,
@@ -54,6 +53,31 @@ export default function MembersPage() {
 
   const [roleMenuOpen, setRoleMenuOpen] = useState<string | null>(null);
   const [updatingRole, setUpdatingRole] = useState<string | null>(null);
+  const [menuPos, setMenuPos] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  const closeMenu = useCallback(() => setRoleMenuOpen(null), []);
+
+  useEffect(() => {
+    if (!roleMenuOpen) return;
+    function onClickOutside(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        closeMenu();
+      }
+    }
+    document.addEventListener('mousedown', onClickOutside);
+    return () => document.removeEventListener('mousedown', onClickOutside);
+  }, [roleMenuOpen, closeMenu]);
+
+  function openRoleMenu(memberId: string, buttonEl: HTMLButtonElement) {
+    if (roleMenuOpen === memberId) {
+      setRoleMenuOpen(null);
+      return;
+    }
+    const rect = buttonEl.getBoundingClientRect();
+    setMenuPos({ top: rect.bottom + 4, left: rect.left });
+    setRoleMenuOpen(memberId);
+  }
 
   const currentMembership = memberList.find((m) => m.user.id === user?.id);
   const canManage = currentMembership?.role === 'OWNER' || currentMembership?.role === 'ADMIN';
@@ -236,41 +260,17 @@ export default function MembersPage() {
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="relative inline-block">
+                    <div className="inline-block">
                       {canChangeRole(member) ? (
-                        <>
-                          <button
-                            onClick={() =>
-                              setRoleMenuOpen(roleMenuOpen === member.id ? null : member.id)
-                            }
-                            disabled={updatingRole === member.id}
-                            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${config.color} ${config.bg} transition-colors hover:opacity-80`}
-                          >
-                            <RoleIcon className="h-3.5 w-3.5" />
-                            {updatingRole === member.id ? 'Updating...' : config.label}
-                            <ChevronDown className="h-3 w-3" />
-                          </button>
-                          {roleMenuOpen === member.id && (
-                            <div className="absolute left-0 top-full z-10 mt-1 w-36 rounded-lg border border-border bg-card py-1 shadow-lg">
-                              {['ADMIN', 'MEMBER']
-                                .filter((r) => r !== member.role)
-                                .map((role) => {
-                                  const rc = roleConfig[role];
-                                  const Icon = rc.icon;
-                                  return (
-                                    <button
-                                      key={role}
-                                      onClick={() => handleRoleChange(member.id, role)}
-                                      className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-foreground transition-colors hover:bg-muted"
-                                    >
-                                      <Icon className={`h-3.5 w-3.5 ${rc.color}`} />
-                                      {rc.label}
-                                    </button>
-                                  );
-                                })}
-                            </div>
-                          )}
-                        </>
+                        <button
+                          onClick={(e) => openRoleMenu(member.id, e.currentTarget)}
+                          disabled={updatingRole === member.id}
+                          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${config.color} ${config.bg} transition-colors hover:opacity-80`}
+                        >
+                          <RoleIcon className="h-3.5 w-3.5" />
+                          {updatingRole === member.id ? 'Updating...' : config.label}
+                          <ChevronDown className="h-3 w-3" />
+                        </button>
                       ) : (
                         <span
                           className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${config.color} ${config.bg}`}
@@ -303,6 +303,35 @@ export default function MembersPage() {
           </tbody>
         </table>
       </div>
+
+      {/* Role change dropdown (fixed position, renders above overflow) */}
+      {roleMenuOpen && (
+        <div
+          ref={menuRef}
+          className="fixed z-50 w-36 rounded-lg border border-border bg-card py-1 shadow-lg"
+          style={{ top: menuPos.top, left: menuPos.left }}
+        >
+          {['ADMIN', 'MEMBER']
+            .filter((r) => {
+              const m = memberList.find((m) => m.id === roleMenuOpen);
+              return m ? r !== m.role : true;
+            })
+            .map((role) => {
+              const rc = roleConfig[role];
+              const Icon = rc.icon;
+              return (
+                <button
+                  key={role}
+                  onClick={() => handleRoleChange(roleMenuOpen, role)}
+                  className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-foreground transition-colors hover:bg-muted"
+                >
+                  <Icon className={`h-3.5 w-3.5 ${rc.color}`} />
+                  {rc.label}
+                </button>
+              );
+            })}
+        </div>
+      )}
 
       {/* Add Member Modal */}
       <Modal open={showAdd} onClose={() => { setShowAdd(false); setAddError(''); }} title="Add Member">
