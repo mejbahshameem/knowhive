@@ -10,6 +10,7 @@ import {
   CreateOrganizationDto,
   UpdateOrganizationDto,
   AddMemberDto,
+  UpdateMemberRoleDto,
 } from './dto';
 
 @Injectable()
@@ -144,6 +145,59 @@ export class OrganizationsService {
     }
 
     await this.prisma.organizationMember.delete({ where: { id: memberId } });
+  }
+
+  async updateMemberRole(
+    slug: string,
+    memberId: string,
+    dto: UpdateMemberRoleDto,
+    userId: string,
+  ) {
+    const org = await this.findBySlug(slug);
+    const callerMembership = org.members.find((m) => m.userId === userId);
+
+    if (!callerMembership) {
+      throw new ForbiddenException('Not a member of this organization');
+    }
+
+    const target = org.members.find((m) => m.id === memberId);
+    if (!target) {
+      throw new NotFoundException('Member not found');
+    }
+
+    if (target.role === OrgRole.OWNER) {
+      throw new ForbiddenException('Cannot change the owner role');
+    }
+
+    if (dto.role === OrgRole.OWNER) {
+      throw new ForbiddenException('Cannot assign OWNER role');
+    }
+
+    if (
+      callerMembership.role === OrgRole.ADMIN &&
+      target.role === OrgRole.ADMIN
+    ) {
+      throw new ForbiddenException('Admins cannot change another admin role');
+    }
+
+    this.assertRole(org.members, userId, [OrgRole.OWNER, OrgRole.ADMIN]);
+
+    return this.prisma.organizationMember.update({
+      where: { id: memberId },
+      data: { role: dto.role },
+      include: { user: { select: { id: true, email: true, name: true } } },
+    });
+  }
+
+  async listMembers(slug: string, userId: string) {
+    const org = await this.findBySlug(slug);
+    this.assertRole(org.members, userId, [
+      OrgRole.OWNER,
+      OrgRole.ADMIN,
+      OrgRole.MEMBER,
+    ]);
+
+    return org.members;
   }
 
   async getUserMembership(orgId: string, userId: string) {

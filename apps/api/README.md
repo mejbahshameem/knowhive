@@ -36,7 +36,9 @@ Interactive Swagger UI is available at **http://localhost:3001/api/docs** when t
 | GET | `/api/organizations/:slug` | Bearer | Get organization by slug (members only) |
 | PATCH | `/api/organizations/:slug` | Bearer | Update organization (ADMIN+) |
 | DELETE | `/api/organizations/:slug` | Bearer | Delete organization (OWNER only) |
+| GET | `/api/organizations/:slug/members` | Bearer | List organization members |
 | POST | `/api/organizations/:slug/members` | Bearer | Add member (ADMIN+) |
+| PATCH | `/api/organizations/:slug/members/:memberId` | Bearer | Update member role (ADMIN+) |
 | DELETE | `/api/organizations/:slug/members/:memberId` | Bearer | Remove member (ADMIN+) |
 
 ### Knowledge Bases

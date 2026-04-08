@@ -61,6 +61,8 @@ src/
 │       ├── page.tsx               Organizations list
 │       └── [slug]/
 │           ├── page.tsx           Knowledge bases for an organization
+│           ├── members/
+│           │   └── page.tsx       Member management (add, remove, roles)
 │           └── [kbId]/
 │               ├── page.tsx       Documents list for a knowledge base
 │               ├── [docId]/
@@ -98,6 +100,7 @@ e2e/                               Playwright test suite
 | `/register` | New user registration | No |
 | `/dashboard` | Organizations list | Yes |
 | `/dashboard/[slug]` | Knowledge bases in an organization | Yes |
+| `/dashboard/[slug]/members` | Member management with role editing | Yes |
 | `/dashboard/[slug]/[kbId]` | Documents in a knowledge base | Yes |
 | `/dashboard/[slug]/[kbId]/[docId]` | Document detail with edit and delete | Yes |
 | `/dashboard/[slug]/[kbId]/search` | Semantic search interface | Yes |
@@ -114,6 +117,7 @@ All backend communication goes through `src/lib/api.ts`, which provides typed me
 |--------|---------|
 | Auth | `register`, `login`, `refresh`, `me` |
 | Organizations | `list`, `get`, `create`, `update`, `remove` |
+| Members | `list`, `add`, `updateRole`, `remove` |
 | Knowledge Bases | `list`, `get`, `create`, `remove` |
 | Documents | `list`, `get`, `create`, `update`, `remove` |
 | Search | `query` |

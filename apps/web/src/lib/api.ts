@@ -126,6 +126,7 @@ export interface Organization {
 export interface OrgMember {
   id: string;
   role: string;
+  joinedAt?: string;
   user: { id: string; name: string; email: string };
 }
 
@@ -144,6 +145,22 @@ export const organizations = {
 
   remove: (token: string, slug: string) =>
     request<void>(`/api/organizations/${slug}`, { method: 'DELETE', token }),
+};
+
+// Members
+
+export const members = {
+  list: (token: string, slug: string) =>
+    request<OrgMember[]>(`/api/organizations/${slug}/members`, { token }),
+
+  add: (token: string, slug: string, data: { email: string; role: string }) =>
+    request<OrgMember>(`/api/organizations/${slug}/members`, { method: 'POST', body: JSON.stringify(data), token }),
+
+  updateRole: (token: string, slug: string, memberId: string, data: { role: string }) =>
+    request<OrgMember>(`/api/organizations/${slug}/members/${memberId}`, { method: 'PATCH', body: JSON.stringify(data), token }),
+
+  remove: (token: string, slug: string, memberId: string) =>
+    request<void>(`/api/organizations/${slug}/members/${memberId}`, { method: 'DELETE', token }),
 };
 
 // Knowledge Bases
