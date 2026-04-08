@@ -460,9 +460,9 @@ describe('OrganizationsService', () => {
     it('should throw ForbiddenException for a non member', async () => {
       mockPrismaService.organization.findUnique.mockResolvedValue(mockOrg);
 
-      await expect(
-        service.listMembers(slug, 'unknown-user'),
-      ).rejects.toThrow(ForbiddenException);
+      await expect(service.listMembers(slug, 'unknown-user')).rejects.toThrow(
+        ForbiddenException,
+      );
     });
   });
 });

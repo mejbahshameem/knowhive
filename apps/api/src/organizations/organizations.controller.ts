@@ -132,10 +132,7 @@ export class OrganizationsController {
   @ApiOperation({ summary: 'List all members of an organization' })
   @ApiParam({ name: 'slug', description: 'Organization URL slug' })
   @ApiResponse({ status: 200, description: 'Array of members' })
-  listMembers(
-    @Param('slug') slug: string,
-    @CurrentUser('id') userId: string,
-  ) {
+  listMembers(@Param('slug') slug: string, @CurrentUser('id') userId: string) {
     return this.orgsService.listMembers(slug, userId);
   }
 }

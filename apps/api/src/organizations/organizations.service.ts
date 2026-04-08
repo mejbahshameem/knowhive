@@ -173,7 +173,10 @@ export class OrganizationsService {
       throw new ForbiddenException('Cannot assign OWNER role');
     }
 
-    if (callerMembership.role === OrgRole.ADMIN && target.role === OrgRole.ADMIN) {
+    if (
+      callerMembership.role === OrgRole.ADMIN &&
+      target.role === OrgRole.ADMIN
+    ) {
       throw new ForbiddenException('Admins cannot change another admin role');
     }
 
