@@ -2,6 +2,13 @@
 
 Backend service for KnowHive. Built with NestJS, Prisma, and PostgreSQL.
 
+## Live API
+
+| Surface | URL |
+|---------|-----|
+| Backend (Render) | https://knowhive.onrender.com |
+| API docs (Swagger) | https://knowhive.onrender.com/api/docs |
+
 ## Running locally
 
 ```bash
@@ -14,7 +21,7 @@ Server starts at `http://localhost:3001`. Health check at `GET /health`.
 
 ## API Documentation
 
-Interactive Swagger UI is available at **http://localhost:3001/api/docs** when the server is running. All endpoints are documented with request/response schemas and example values.
+Interactive Swagger UI is available at **https://knowhive.onrender.com/api/docs** for the deployed API and at **http://localhost:3001/api/docs** for local development. All endpoints are documented with request and response schemas plus example values.
 
 ## API endpoints
 

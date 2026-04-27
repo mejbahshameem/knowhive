@@ -4,6 +4,25 @@
 
 Internal knowledge base with AI powered search. Teams upload documentation, then ask questions in natural language. The system finds relevant documents and generates answers via OpenAI.
 
+Teams lose time when knowledge is scattered across docs, chat threads, and personal notes. KnowHive brings that knowledge into one workspace so answers are fast, grounded, and easy to trust.
+
+## Live demo
+
+| Surface | URL |
+|---------|-----|
+| Frontend (Vercel) | https://knowhiveio.vercel.app |
+| Backend (Render) | https://knowhive.onrender.com |
+| API docs (Swagger) | https://knowhive.onrender.com/api/docs |
+
+### Try it as a power user
+
+Skip signup and log in with the seeded user account.
+
+| Field | Value |
+|-------|-------|
+| Email | `demo@knowhive.dev` |
+| Password | `Demo@1234` |
+
 ## Stack
 
 | Layer | Tech |
@@ -67,15 +86,6 @@ npm run dev
 
 Health check: `GET http://localhost:3001/health`
 
-## Demo Account
-
-A test account is already set up with sample data so you can explore the full application right away. Log in with the credentials below to browse knowledge bases, view documents, and try semantic search.
-
-| Field | Value |
-|-------|-------|
-| Email | `demo@knowhive.dev` |
-| Password | `Demo@1234` |
-
 If you are running a local instance, populate the data first:
 
 ```bash
@@ -87,7 +97,7 @@ This creates the demo user, an organization, four knowledge bases, and 11 docume
 
 ## API Documentation
 
-Interactive Swagger UI is available at **http://localhost:3001/api/docs** when the API is running. The documentation covers all 25 endpoints with request/response schemas, parameter descriptions, and example values. You can authenticate directly from the Swagger UI using the **Authorize** button with a JWT access token.
+Interactive Swagger UI is available at **https://knowhive.onrender.com/api/docs** for the deployed API and at **http://localhost:3001/api/docs** when running locally. The documentation covers all 25 endpoints with request and response schemas, parameter details, and example values. You can authenticate directly from Swagger using the **Authorize** button with a JWT access token.
 
 ## Docker
 
