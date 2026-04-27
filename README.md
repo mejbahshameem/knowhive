@@ -2,9 +2,10 @@
 
 [![CI](https://github.com/mejbahshameem/knowhive/actions/workflows/ci.yml/badge.svg)](https://github.com/mejbahshameem/knowhive/actions/workflows/ci.yml)
 
-Internal knowledge base with AI powered search. Teams upload documentation, then ask questions in natural language. The system finds relevant documents and generates answers via OpenAI.
-
-Teams lose time when knowledge is scattered across docs, chat threads, and personal notes. KnowHive brings that knowledge into one workspace so answers are fast, grounded, and easy to trust.
+Teams lose time when knowledge is scattered across docs, chat threads, and personal notes.
+KnowHive is an internal knowledge base with AI powered search that brings knowledge into one workspace.
+Teams upload documentation and ask questions in natural language.
+The system retrieves relevant documents and generates grounded answers using OpenAI.
 
 ## Live demo
 
