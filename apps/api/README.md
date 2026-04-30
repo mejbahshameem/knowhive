@@ -6,7 +6,6 @@ Backend service for KnowHive. Built with NestJS, Prisma, and PostgreSQL.
 
 | Surface | URL |
 |---------|-----|
-| Backend (Render) | https://knowhive.onrender.com |
 | API docs (Swagger) | https://knowhive.onrender.com/api/docs |
 
 ## Running locally
