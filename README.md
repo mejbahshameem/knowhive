@@ -12,7 +12,6 @@ The system retrieves relevant documents and generates grounded answers using Ope
 | Surface | URL |
 |---------|-----|
 | Frontend (Vercel) | https://knowhiveio.vercel.app |
-| Backend (Render) | https://knowhive.onrender.com |
 | API docs (Swagger) | https://knowhive.onrender.com/api/docs |
 
 ### Try it as a power user
